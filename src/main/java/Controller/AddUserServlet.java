@@ -45,7 +45,7 @@ public class AddUserServlet extends HttpServlet {
 //        user.setJoinedDate(((Date)request.getParameter("joinedDate")));
 
 //        session.setAttribute("userSessionData",user);
-        session.setAttribute("listOfUsers",userDataUtil.getListOfUsers());
+
 
 
         System.out.println("in ADUSER");

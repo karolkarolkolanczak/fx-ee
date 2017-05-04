@@ -41,7 +41,7 @@ public class LoginServlet extends HttpServlet{
 
 
         session.setAttribute("isLogged",isLogged(request));
-
+        session.setAttribute("listOfUsers",userDataUtil.getListOfUsers());
 
 
         if(session.getAttribute("isLogged").equals(true)){

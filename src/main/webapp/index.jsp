@@ -1,8 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="Model.UserDataUtil" %>
+<%@ page import="Model.User" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
 <html>
 <body>
-
 
 
 <h2>ADMINISTRATOR PANEL</h2>
@@ -21,19 +23,39 @@
 </form>
 <hr>
 <form action="LogOutServlet" method="get">
-<input type="submit" value="log out">
+    <input type="submit" value="log out">
 </form>
 <hr>
 <jsp:include page="currencyFeed.jsp"/>
 
 <hr>
 <hr>
-<jsp:include page="usersList.jsp"/>
-<hr>
+
+<%
+    List<User> listOfUsers = ((List<User>) session.getAttribute("listOfUsers"));
+%>
+
+LIST OF PARTNERS ( na razie sa userzy)
+
+<table border="1">
+
+    <% for(int i = 0; i < listOfUsers.size(); i++) { %>
+    <tr>
+        <td><%=listOfUsers.get(i).getFirstName()%></td>
+        <td><%=listOfUsers.get(i).getLastName()%></td>
+        <td><%=listOfUsers.get(i).getLogin()%></td>
+        <td><%=listOfUsers.get(i).getPassword()%></td>
+        <td><%=listOfUsers.get(i).getEmail()%></td>
+    </tr>
+    <% } %>
+
+</table>
 
 <hr>
-<%--<jsp:include page="confirm.jsp"/>--%>
+    <%--<jsp:include page="usersList.jsp"/>--%>
 <hr>
+
+
 
 
 </body>
