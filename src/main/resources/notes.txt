@@ -1,1 +1,25 @@
 - servlets
+-<%--<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>--%>
+ <%@taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
+ -
+ CREATE USER 'admin'@'localhost' IDENTIFIED BY 'admin';
+   GRANT ALL PRIVILEGES ON * . * TO 'admin'@'localhost';
+
+-
+
+CREATE DATABASE  IF NOT EXISTS `fxdatabase`;
+USE `fxdatabase`;
+CREATE TABLE `partner` (
+  `idPartner` int(11) NOT NULL AUTO_INCREMENT,
+  `firstName` varchar(45) NOT NULL,
+  `lastName` varchar(45) NOT NULL,
+  `login` varchar(45) NOT NULL,
+  `password` varchar(45) NOT NULL,
+  `email` varchar(45) NOT NULL,
+  `joinedDate` date NOT NULL,
+  PRIMARY KEY (`idPartner`),
+  UNIQUE KEY `idPartner_UNIQUE` (`idPartner`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--------------------------------------------
+INSERT INTO `fxdatabase`.`partner` (`firstName`,`lastName`,`login`,`password`,`email`,`joinedDate`) VALUES ('john', 'derek', 'aaa', '123','123@wp.pl','2017-01-30');

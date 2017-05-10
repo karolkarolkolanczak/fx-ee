@@ -11,11 +11,13 @@ public class Partner {
     private String email;
     private Date joinedDate;
 
-    public Partner(String firstName, String lastName, String email, Date joinedDate) {
+    public Partner() {
+    }
+
+    public Partner(String firstName, String lastName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.joinedDate = joinedDate;
     }
 
     public String getFirstName() {

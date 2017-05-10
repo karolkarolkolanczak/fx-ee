@@ -1,5 +1,7 @@
 package Controller;
 
+import Model.Partner;
+import Model.PartnerDataUtil;
 import Model.User;
 import Model.UserDataUtil;
 
@@ -11,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by a on 2017-05-03.
@@ -18,6 +22,8 @@ import java.io.IOException;
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet{
     User user;
+    List<Partner> listOfPartners;
+    PartnerDataUtil partnerDataUtil;
     Session sessionClass;
     HttpSession session;
     UserDataUtil userDataUtil;
@@ -28,35 +34,31 @@ public class LoginServlet extends HttpServlet{
         sessionClass = new Session();
         userDataUtil=new UserDataUtil();
         isLogged=false;
+        partnerDataUtil=new PartnerDataUtil();
+        listOfPartners=new ArrayList<>();
     }
 
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-
         session=sessionClass.getSession(request);
-
-
-
+        listOfPartners=partnerDataUtil.getListOfPartners();
 
         session.setAttribute("isLogged",isLogged(request));
         session.setAttribute("listOfUsers",userDataUtil.getListOfUsers());
-
+        session.setAttribute("listOfPartners",listOfPartners);
 
         if(session.getAttribute("isLogged").equals(true)){
 
-
-
             System.out.println("FROM SESSION - LOGIN: "+((User)session.getAttribute("userSessionData")).getLogin());
-            RequestDispatcher dispatcher=request.getRequestDispatcher("/index.jsp");
+            RequestDispatcher dispatcher=request.getRequestDispatcher("/admin.jsp");
             dispatcher.forward(request,response);
         }
         else{
             RequestDispatcher dispatcher=request.getRequestDispatcher("/login.jsp");
             dispatcher.forward(request,response);
         }
-
 
 
     }

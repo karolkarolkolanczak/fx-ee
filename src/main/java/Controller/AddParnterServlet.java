@@ -27,7 +27,7 @@ public class AddParnterServlet extends HttpServlet {
     HttpSession session;
 
     public AddParnterServlet() {
-        partner = new Partner();
+
         sessionClass = new Session();
         partnerDataUtil=new PartnerDataUtil();
         listOfPartners=new ArrayList<>();
@@ -36,6 +36,7 @@ public class AddParnterServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("----------- FROM ADD PARTNER SERVLET -----------");
+        partner = new Partner();
 
         session=sessionClass.getSession(request);
 
@@ -56,6 +57,7 @@ public class AddParnterServlet extends HttpServlet {
 //        System.out.println("FROM SESSION - LOGIN "+((User)session.getAttribute("userSessionData")).getLogin());
         System.out.println("------------------");
 
+        request.setAttribute("listOfPartners", listOfPartners);
 
         RequestDispatcher dispatcher=request.getRequestDispatcher("/admin.jsp");
         dispatcher.forward(request,response);
