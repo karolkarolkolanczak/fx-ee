@@ -43,11 +43,13 @@ public class LoginServlet extends HttpServlet{
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         session=sessionClass.getSession(request);
-        listOfPartners=partnerDataUtil.getListOfPartners();
+        listOfPartners=partnerDataUtil.getListOfAllPartners();
 
         session.setAttribute("isLogged",isLogged(request));
         session.setAttribute("listOfUsers",userDataUtil.getListOfUsers());
         session.setAttribute("listOfPartners",listOfPartners);
+
+        request.setAttribute("listOfPartners", listOfPartners);
 
         if(session.getAttribute("isLogged").equals(true)){
 

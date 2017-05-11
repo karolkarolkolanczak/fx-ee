@@ -6,18 +6,33 @@ import java.util.Date;
  * Created by a on 2017-05-03.
  */
 public class Partner {
+    private int partnerId;
     private String firstName;
     private String lastName;
+    private String login;
+    private String password;
     private String email;
-    private Date joinedDate;
+//    private Date joinedDate;
 
     public Partner() {
     }
 
-    public Partner(String firstName, String lastName, String email) {
+    public Partner(int partnerId, String firstName, String lastName, String login, String password, String email) {
+        this.partnerId = partnerId;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.login = login;
+        this.password = password;
         this.email = email;
+//        this.joinedDate = joinedDate;
+    }
+
+    public int getPartnerId() {
+        return partnerId;
+    }
+
+    public void setPartnerId(int partnerId) {
+        this.partnerId = partnerId;
     }
 
     public String getFirstName() {
@@ -36,6 +51,22 @@ public class Partner {
         this.lastName = lastName;
     }
 
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -44,11 +75,11 @@ public class Partner {
         this.email = email;
     }
 
-    public Date getJoinedDate() {
-        return joinedDate;
-    }
-
-    public void setJoinedDate(Date joinedDate) {
-        this.joinedDate = joinedDate;
-    }
+//    public Date getJoinedDate() {
+//        return joinedDate;
+//    }
+//
+//    public void setJoinedDate(Date joinedDate) {
+//        this.joinedDate = joinedDate;
+//    }
 }

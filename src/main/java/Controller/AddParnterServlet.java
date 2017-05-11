@@ -29,8 +29,8 @@ public class AddParnterServlet extends HttpServlet {
     public AddParnterServlet() {
 
         sessionClass = new Session();
-        partnerDataUtil=new PartnerDataUtil();
-        listOfPartners=new ArrayList<>();
+        partnerDataUtil = new PartnerDataUtil();
+        listOfPartners = new ArrayList<>();
     }
 
     @Override
@@ -38,29 +38,30 @@ public class AddParnterServlet extends HttpServlet {
         System.out.println("----------- FROM ADD PARTNER SERVLET -----------");
         partner = new Partner();
 
-        session=sessionClass.getSession(request);
+        session = sessionClass.getSession(request);
 
         System.out.println(request.getParameter("firstName"));
 
         partner.setFirstName(request.getParameter("firstName"));
         partner.setLastName(request.getParameter("lastName"));
-//        partner.setLogin(request.getParameter("login"));
-//        partner.setPassword(request.getParameter("password"));
+//      partner.setLogin(request.getParameter("login"));
+//      partner.setPassword(request.getParameter("password"));
         partner.setEmail(request.getParameter("email"));
-//        partner.setJoinedDate(((Date)request.getParameter("joinedDate")));
+//      partner.setJoinedDate(((Date)request.getParameter("joinedDate")));
 
-        listOfPartners=((List<Partner>) session.getAttribute("listOfPartners"));
-        listOfPartners=partnerDataUtil.addToListOfPartners(listOfPartners, partner);
+//      listOfPartners = ((List<Partner>) session.getAttribute("listOfPartners"));
+        listOfPartners=partnerDataUtil.getListOfAllPartners();
+        listOfPartners = partnerDataUtil.addToListOfPartners(listOfPartners, partner);
 
-        session.setAttribute("listOfPartners",listOfPartners);
+//        session.setAttribute("listOfPartners", listOfPartners);
 
-//        System.out.println("FROM SESSION - LOGIN "+((User)session.getAttribute("userSessionData")).getLogin());
+//      System.out.println("FROM SESSION - LOGIN "+((User)session.getAttribute("userSessionData")).getLogin());
         System.out.println("------------------");
 
         request.setAttribute("listOfPartners", listOfPartners);
 
-        RequestDispatcher dispatcher=request.getRequestDispatcher("/admin.jsp");
-        dispatcher.forward(request,response);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/admin.jsp");
+        dispatcher.forward(request, response);
     }
 
 
