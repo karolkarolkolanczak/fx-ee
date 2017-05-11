@@ -6,6 +6,7 @@ import java.util.List;
 
 public class PartnerDataUtil {
     List<Partner> listOfPartners =new ArrayList<>();
+    ConnectionDbUtil connectionDbUtil =new ConnectionDbUtil();
 
     public List<Partner> getListOfAllPartners(){
 
@@ -13,18 +14,13 @@ public class PartnerDataUtil {
 //        listOfPartners.add(new Partner("zenek","wiaderek","345@wp.pl"));
 //        listOfPartners.add(new Partner("wojtek","ccc","456@wp.pl"));
 
-        String sql = "select * from partner";
-        ConnectionDbUtil connectionDbUtil =new ConnectionDbUtil();
-        listOfPartners=connectionDbUtil.getListOfPartners(sql);
+        listOfPartners=connectionDbUtil.getListOfPartners();
 
         return listOfPartners;
     }
 
-
-
-    public List<Partner> addToListOfPartners(List<Partner> listOfPartners, Partner partner){
-        listOfPartners.add(partner);
-        return listOfPartners;
+    public void addToListOfPartners(Partner partner){
+        connectionDbUtil.addToListOfPartners(partner);
     }
 
 }

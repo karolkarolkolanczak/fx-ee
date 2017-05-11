@@ -44,15 +44,18 @@ public class AddParnterServlet extends HttpServlet {
 
         partner.setFirstName(request.getParameter("firstName"));
         partner.setLastName(request.getParameter("lastName"));
-//      partner.setLogin(request.getParameter("login"));
-//      partner.setPassword(request.getParameter("password"));
+        partner.setLogin(request.getParameter("login"));
+        partner.setPassword(request.getParameter("password"));
         partner.setEmail(request.getParameter("email"));
-//      partner.setJoinedDate(((Date)request.getParameter("joinedDate")));
+//        partner.setJoinedDate((Date) request.getParameter("joinedDate")));
 
 //      listOfPartners = ((List<Partner>) session.getAttribute("listOfPartners"));
         listOfPartners=partnerDataUtil.getListOfAllPartners();
-        listOfPartners = partnerDataUtil.addToListOfPartners(listOfPartners, partner);
+//        listOfPartners = partnerDataUtil.addToListOfPartners(listOfPartners, partner);
 
+        partnerDataUtil.addToListOfPartners(partner);
+
+        listOfPartners=partnerDataUtil.getListOfAllPartners();
 //        session.setAttribute("listOfPartners", listOfPartners);
 
 //      System.out.println("FROM SESSION - LOGIN "+((User)session.getAttribute("userSessionData")).getLogin());

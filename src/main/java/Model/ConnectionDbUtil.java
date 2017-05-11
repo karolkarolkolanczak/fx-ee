@@ -1,9 +1,6 @@
 package Model;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,7 +15,7 @@ public class ConnectionDbUtil {
         dataSource = getMySQLDataSource();
     }
 
-    public List<Partner> getListOfPartners(String sql) {
+    public List<Partner> getListOfPartners() {
         List<Partner> listOfPartners = new ArrayList<>();
         Connection connection = null;
         Statement statement = null;
@@ -31,7 +28,7 @@ public class ConnectionDbUtil {
 
             System.out.println(connection.getClientInfo() + " | " + connection.getMetaData());
             statement = connection.createStatement();
-//            sql = "select * from partner";
+            String sql = "select * from partner";
             resultSet = statement.executeQuery(sql);
 
             while (resultSet.next()) {
@@ -55,9 +52,47 @@ public class ConnectionDbUtil {
             System.out.println("%%%%%%: " + e.getMessage() + " | " + e.getSQLState() + " | " + e.getLocalizedMessage() + " | " + e.getStackTrace());
         } finally {
             close(connection, statement, resultSet);
-            System.out.println("KONIECCCCCCCC");
+            System.out.println(" - END OF GET ALL PARTNERS - ");
         }
         return listOfPartners;
+    }
+
+    void addToListOfPartners(Partner partner){
+
+        // http://alvinalexander.com/java/java-mysql-insert-example-preparedstatement
+        // https://www.mkyong.com/jdbc/jdbc-preparestatement-example-insert-a-record/
+
+        List<Partner> listOfPartners = new ArrayList<>();
+        Connection connection = null;
+        Statement statement = null;
+        PreparedStatement preparedStatement=null;
+
+        try {
+            connection = dataSource.getConnection();
+
+            System.out.println(connection.getClientInfo() + " | " + connection.getMetaData());
+
+            statement = connection.createStatement();
+
+            String sql = "INSERT INTO `fxdatabase`.`partner` (`idPartner`,`firstName`,`lastName`,`login`,`password`,`email`) VALUES (null,?,?,?,?,?)";
+
+            // create the mysql insert preparedstatement
+            preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString (1, partner.getFirstName());
+                preparedStatement.setString (2, partner.getLastName());
+                preparedStatement.setString (3, partner.getLogin());
+                preparedStatement.setString (4, partner.getPassword());
+                preparedStatement.setString (5, partner.getEmail());
+
+            // execute the preparedstatement
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println("%%%%%%: " + e.getMessage() + " | " + e.getSQLState() + " | " + e.getLocalizedMessage() + " | " + e.getStackTrace());
+        } finally {
+            close(connection, statement, preparedStatement);
+            System.out.println(" - END OF ADD NEW PARTNER - ");
+        }
     }
 
     public static DataSource getMySQLDataSource() {
@@ -73,6 +108,15 @@ public class ConnectionDbUtil {
     private void close(Connection connection, Statement statement, ResultSet resultSet) {
         try {
             if (resultSet != null) resultSet.close();
+            if (statement != null) statement.close();
+            if (connection != null) connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    private void close(Connection connection, Statement statement,PreparedStatement preparedStatement) {
+        try {
+            if (preparedStatement != null) preparedStatement.close();
             if (statement != null) statement.close();
             if (connection != null) connection.close();
         } catch (SQLException e) {

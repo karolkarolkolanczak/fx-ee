@@ -25,7 +25,7 @@ public class TestConnectionServlet extends HttpServlet {
 
         ConnectionDbUtil connectionDbUtil =new ConnectionDbUtil();
 
-        connectionDbUtil.getListOfPartners(sqlAllPartners);
+        connectionDbUtil.getListOfPartners();
 
     }
 }

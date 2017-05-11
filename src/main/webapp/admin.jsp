@@ -17,8 +17,8 @@
     Add new Partner: </br></br>
     First name: <input type="text" name="firstName" value="adam"/></br>
     Last name: <input type="text" name="lastName" value="kowalski"/></br>
-    <%--Login: <input type="text" name="login" value="aaa"/></br>--%>
-    <%--Password: <input type="text" name="password" value="123"/></br>--%>
+    Login: <input type="text" name="login" value="aaa"/></br>
+    Password: <input type="text" name="password" value="123"/></br>
     Email: <input type="text" name="email" value="123@wp.pl"/></br></br>
     <%--Joined: <input type="date" name="joinedDate"/></br>--%>
 
@@ -75,8 +75,8 @@
     <tr>
     <th>First name</th>
     <th>Last name</th>
-    <%--<th>Login</th>--%>
-    <%--<th>Password</th>--%>
+    <th>Login</th>
+    <th>Password</th>
     <th>Email</th>
     <th></th>
     <th></th>
@@ -86,6 +86,8 @@
         <tr>
             <td><c:out value="${partner.firstName}" /></td>
             <td><c:out value="${partner.lastName}" /></td>
+            <td><c:out value="${partner.login}" /></td>
+            <td><c:out value="${partner.password}" /></td>
             <td><c:out value="${partner.email}" /></td>
             <td>view details</td>
             <td>delete</td>

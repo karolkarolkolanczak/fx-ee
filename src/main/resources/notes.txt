@@ -16,7 +16,7 @@ CREATE TABLE `partner` (
   `login` varchar(45) NOT NULL,
   `password` varchar(45) NOT NULL,
   `email` varchar(45) NOT NULL,
-  `joinedDate` date NOT NULL,
+  `joinedDate` date NULL,
   PRIMARY KEY (`idPartner`),
   UNIQUE KEY `idPartner_UNIQUE` (`idPartner`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
