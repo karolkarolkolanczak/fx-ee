@@ -1,12 +1,20 @@
 package Model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import java.util.Date;
 
-/**
- * Created by a on 2017-05-01.
- */
+@Entity
+@Table(name="user")
 public class User {
-
+    @Id
+    @Column(name="userId")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int userId;
     private String firstName;
     private String lastName;
     private String login;
@@ -17,12 +25,21 @@ public class User {
     public User() {
     }
 
-    public User(String firstName, String lastName, String login, String password, String email) {
+    public User( String firstName, String lastName, String login, String password, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.login = login;
         this.password = password;
         this.email = email;
+//        this.joinedDate = joinedDate;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getFirstName() {
@@ -65,11 +82,11 @@ public class User {
         this.email = email;
     }
 
-    public Date getJoinedDate() {
-        return joinedDate;
-    }
-
-    public void setJoinedDate(Date joinedDate) {
-        this.joinedDate = joinedDate;
-    }
+//    public Date getJoinedDate() {
+//        return joinedDate;
+//    }
+//
+//    public void setJoinedDate(Date joinedDate) {
+//        this.joinedDate = joinedDate;
+//    }
 }

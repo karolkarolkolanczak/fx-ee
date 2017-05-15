@@ -2,10 +2,9 @@ package Model;
 
 import java.util.Date;
 
-/**
- * Created by a on 2017-05-03.
- */
+
 public class Partner {
+
     private int partnerId;
     private String firstName;
     private String lastName;
