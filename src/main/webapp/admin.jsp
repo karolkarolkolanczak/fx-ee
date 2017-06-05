@@ -9,8 +9,9 @@
 <html>
 <body>
 
-
-<h2>ADMINISTRATOR PANEL</h2>
+<h2>ADMINISTRATOR PANEL</h2><hr>
+<%User user=(User)session.getAttribute("userSessionData");%>
+Welcome Admin: '<%=user.getLogin()%>'<br><br><br>
 
 <%--<form action="currencyFeed.jsp">--%>
 <form action="AddParnterServlet" method="GET">
@@ -39,7 +40,7 @@
     <%--List<Partner> listOfPartners = ((List<Partner>) session.getAttribute("listOfPartners"));--%>
 <%--%>--%>
 
-<%--LIST OF PARTNERS:</br></br>--%>
+<%--&lt;%&ndash;LIST OF PARTNERS:</br></br>&ndash;%&gt;--%>
 
 <%--<table border="1">--%>
     <%--<tr>--%>
@@ -53,11 +54,11 @@
     <%--</tr>--%>
     <%--<% for(int i = 0; i < listOfPartners.size(); i++) { %>--%>
     <%--<tr>--%>
-        <%--<td><%=listOfPartners.get(i).getFirstName()%></td>--%>
-        <%--<td><%=listOfPartners.get(i).getLastName()%></td>--%>
-        <%--&lt;%&ndash;<td><%=listOfPartners.get(i).getLogin()%></td>&ndash;%&gt;--%>
-        <%--&lt;%&ndash;<td><%=listOfPartners.get(i).getPassword()%></td>&ndash;%&gt;--%>
-        <%--<td><%=listOfPartners.get(i).getEmail()%></td>--%>
+        <%--&lt;%&ndash;<td><%=listOfPartners.get(i).getFirstName()%></td>&ndash;%&gt;--%>
+        <%--&lt;%&ndash;<td><%=listOfPartners.get(i).getLastName()%></td>&ndash;%&gt;--%>
+        <%--<td><%=listOfPartners.get(i).getLogin()%></td>--%>
+        <%--<td><%=listOfPartners.get(i).getPassword()%></td>--%>
+        <%--&lt;%&ndash;<td><%=listOfPartners.get(i).getEmail()%></td>&ndash;%&gt;--%>
         <%--<td>view details</td>--%>
         <%--<td>delete</td>--%>
     <%--</tr>--%>

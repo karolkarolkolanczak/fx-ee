@@ -51,7 +51,7 @@ public class AddParnterServlet extends HttpServlet {
         listOfPartners=partnerDataUtil.getListOfAllPartners();
 //        listOfPartners = partnerDataUtil.addToListOfPartners(listOfPartners, partner);
 
-        partnerDataUtil.addToListOfPartners(partner);
+//        partnerDataUtil.addToListOfPartners(partner);
 
         listOfPartners=partnerDataUtil.getListOfAllPartners();
 //        session.setAttribute("listOfPartners", listOfPartners);

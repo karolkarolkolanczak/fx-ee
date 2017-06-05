@@ -15,13 +15,13 @@ public class PartnerDataUtil {
 //        listOfPartners.add(new Partner("zenek","wiaderek","345@wp.pl"));
 //        listOfPartners.add(new Partner("wojtek","ccc","456@wp.pl"));
 
-        listOfPartners=connectionDbUtil.getListOfPartners();
+        listOfPartners=connectionDbUtil.getListOfAllPartners();
 
         return listOfPartners;
     }
 
-    public void addToListOfPartners(Partner partner){
-        connectionDbUtil.addToListOfPartners(partner);
-    }
+//    public void addToListOfPartners(Partner partner){
+//        connectionDbUtil.addToListOfPartners(partner);
+//    }
 
 }

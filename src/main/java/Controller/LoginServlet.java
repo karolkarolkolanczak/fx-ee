@@ -3,7 +3,7 @@ package Controller;
 import Model.Partner;
 
 import Model.User;
-import Utility.ConnectionToDb;
+import Utility.ConnectionDbUtil;
 import Utility.PartnerDataUtil;
 import Utility.UserDataUtil;
 
@@ -25,13 +25,14 @@ import java.util.List;
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet{
     User user;
-    List<Partner> listOfPartners;
+    List<Partner> listOfAllPartners;
+    List<User> listOfAllUsers;
     PartnerDataUtil partnerDataUtil;
     Session sessionClass;
     HttpSession session;
     UserDataUtil userDataUtil;
     Boolean isLogged;
-    ConnectionToDb connectionToDb;
+    ConnectionDbUtil connectionDbUtil;
 
     public LoginServlet() {
         user = new User();
@@ -39,21 +40,23 @@ public class LoginServlet extends HttpServlet{
         userDataUtil=new UserDataUtil();
         isLogged=false;
         partnerDataUtil=new PartnerDataUtil();
-        listOfPartners=new ArrayList<>();
-        connectionToDb=new ConnectionToDb();
+        listOfAllPartners=new ArrayList<>();
+        listOfAllUsers=new ArrayList<>();
+        connectionDbUtil =new ConnectionDbUtil();
     }
 
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        listOfAllUsers=connectionDbUtil.getListOfAllUsers();
         session=sessionClass.getSession(request);
 
         session.setAttribute("isLogged",isLogged(request));
-        session.setAttribute("listOfUsers",connectionToDb.getListOfAllUsers());
-        session.setAttribute("listOfPartners",connectionToDb.getListOfAllPartners());
+        session.setAttribute("listOfUsers", listOfAllUsers);
 
-        request.setAttribute("listOfPartners", listOfPartners);
+
+        request.setAttribute("listOfPartners", listOfAllPartners);
 
         if(session.getAttribute("isLogged").equals(true)){
 
@@ -69,7 +72,7 @@ public class LoginServlet extends HttpServlet{
     }
     Boolean isLogged(HttpServletRequest request){
 
-        for(User value: connectionToDb.getListOfAllUsers()){
+        for(User value: listOfAllUsers){
             if(value.getLogin().equals(request.getParameter("login")) && value.getPassword().equals(request.getParameter("password"))){
 
                 user.setLogin(request.getParameter("login"));
