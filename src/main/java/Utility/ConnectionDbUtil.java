@@ -1,18 +1,20 @@
-package Model;
+package Utility;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.sql.DataSource;
-import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+
+import Model.Partner;
+//import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 public class ConnectionDbUtil {
 
     DataSource dataSource;
 
     public ConnectionDbUtil() {
-        dataSource = getMySQLDataSource();
+//        dataSource = getMySQLDataSource();
     }
 
     public List<Partner> getListOfPartners() {
@@ -43,9 +45,9 @@ public class ConnectionDbUtil {
                 String email = resultSet.getString("email");
 //              Date joinedDate = resultSet.getString("joinedDate");
 
-                Partner tempPartner = new Partner(partnerId, firstName, lastName,login,password, email);
+//                Partner tempPartner = new Partner(partnerId, firstName, lastName,login,password, email);
 
-                listOfPartners.add(tempPartner);
+//                listOfPartners.add(tempPartner);
             }
 
         } catch (SQLException e) {
@@ -57,7 +59,7 @@ public class ConnectionDbUtil {
         return listOfPartners;
     }
 
-    void addToListOfPartners(Partner partner){
+   public void addToListOfPartners(Partner partner){
 
         // http://alvinalexander.com/java/java-mysql-insert-example-preparedstatement
         // https://www.mkyong.com/jdbc/jdbc-preparestatement-example-insert-a-record/
@@ -95,15 +97,15 @@ public class ConnectionDbUtil {
         }
     }
 
-    public static DataSource getMySQLDataSource() {
-
-        MysqlDataSource mysqlDataSource = new MysqlDataSource();
-        mysqlDataSource.setURL("jdbc:mysql://localhost:3306/fxdatabase");
-        mysqlDataSource.setUser("admin");
-        mysqlDataSource.setPassword("admin");
-
-        return mysqlDataSource;
-    }
+//    public static DataSource getMySQLDataSource() {
+//
+//        MysqlDataSource mysqlDataSource = new MysqlDataSource();
+//        mysqlDataSource.setURL("jdbc:mysql://localhost:3306/fxdatabase");
+//        mysqlDataSource.setUser("admin");
+//        mysqlDataSource.setPassword("admin");
+//
+//        return mysqlDataSource;
+//    }
 
     private void close(Connection connection, Statement statement, ResultSet resultSet) {
         try {

@@ -1,10 +1,17 @@
 package Model;
 
+import javax.persistence.*;
 import java.util.Date;
 
 
-public class Partner {
 
+
+@Entity
+@Table(name="partner")
+public class Partner {
+    @Id
+    @Column(name="partnerId")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int partnerId;
     private String firstName;
     private String lastName;
@@ -16,15 +23,15 @@ public class Partner {
     public Partner() {
     }
 
-    public Partner(int partnerId, String firstName, String lastName, String login, String password, String email) {
-        this.partnerId = partnerId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.login = login;
-        this.password = password;
-        this.email = email;
-//        this.joinedDate = joinedDate;
-    }
+//    public Partner(int partnerId, String firstName, String lastName, String login, String password, String email) {
+//        this.partnerId = partnerId;
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        this.login = login;
+//        this.password = password;
+//        this.email = email;
+////        this.joinedDate = joinedDate;
+//    }
 
     public int getPartnerId() {
         return partnerId;

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+   http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+
+    <persistence-unit name="fxdatabase-persistence-unit" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>Model.User</class>
+        <class>Model.Partner</class>
+
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+            <!--for docker-->
+            <!--<property name="javax.persistence.jdbc.url" value="jdbc:mysql://db:3306/statistics"/>-->
+            <!--for windows setting-->
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/fxdatabase?useSSL=false&amp;useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"/>
+            <property name="javax.persistence.jdbc.user" value="admin"/>
+            <property name="javax.persistence.jdbc.password" value="admin"/>
+
+            <property name="hibernate.show_sql" value="true"/>
+            <!--<property name="hibernate.hbm2ddl.auto" value="update"/>-->
+            <property name="hibernate.hbm2ddl.auto" value="drop-and-create"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="javax.persistence.sql-load-script-source" value="META-INF/sql/data.sql"/>
+
+
+        </properties>
+    </persistence-unit>
+</persistence>

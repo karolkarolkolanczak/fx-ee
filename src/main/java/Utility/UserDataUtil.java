@@ -1,4 +1,6 @@
-package Model;
+package Utility;
+
+import Model.User;
 
 import java.util.ArrayList;
 import java.util.List;

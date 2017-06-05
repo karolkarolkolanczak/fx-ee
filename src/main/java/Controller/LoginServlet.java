@@ -1,9 +1,12 @@
 package Controller;
 
 import Model.Partner;
-import Model.PartnerDataUtil;
+
 import Model.User;
-import Model.UserDataUtil;
+import Utility.ConnectionToDb;
+import Utility.PartnerDataUtil;
+import Utility.UserDataUtil;
+
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -28,6 +31,7 @@ public class LoginServlet extends HttpServlet{
     HttpSession session;
     UserDataUtil userDataUtil;
     Boolean isLogged;
+    ConnectionToDb connectionToDb;
 
     public LoginServlet() {
         user = new User();
@@ -36,6 +40,7 @@ public class LoginServlet extends HttpServlet{
         isLogged=false;
         partnerDataUtil=new PartnerDataUtil();
         listOfPartners=new ArrayList<>();
+        connectionToDb=new ConnectionToDb();
     }
 
 
@@ -43,11 +48,10 @@ public class LoginServlet extends HttpServlet{
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         session=sessionClass.getSession(request);
-        listOfPartners=partnerDataUtil.getListOfAllPartners();
 
         session.setAttribute("isLogged",isLogged(request));
-        session.setAttribute("listOfUsers",userDataUtil.getListOfUsers());
-        session.setAttribute("listOfPartners",listOfPartners);
+        session.setAttribute("listOfUsers",connectionToDb.getListOfAllUsers());
+        session.setAttribute("listOfPartners",connectionToDb.getListOfAllPartners());
 
         request.setAttribute("listOfPartners", listOfPartners);
 
@@ -62,13 +66,11 @@ public class LoginServlet extends HttpServlet{
             dispatcher.forward(request,response);
         }
 
-
     }
     Boolean isLogged(HttpServletRequest request){
 
-        for(User value: userDataUtil.getListOfUsers()){
+        for(User value: connectionToDb.getListOfAllUsers()){
             if(value.getLogin().equals(request.getParameter("login")) && value.getPassword().equals(request.getParameter("password"))){
-
 
                 user.setLogin(request.getParameter("login"));
                 user.setPassword(request.getParameter("password"));

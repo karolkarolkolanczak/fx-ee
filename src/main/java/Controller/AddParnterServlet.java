@@ -1,9 +1,8 @@
 package Controller;
 
 import Model.Partner;
-import Model.PartnerDataUtil;
-import Model.User;
-import Model.UserDataUtil;
+import Utility.PartnerDataUtil;
+
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @WebServlet("/AddParnterServlet")

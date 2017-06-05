@@ -1,6 +1,7 @@
-package Model;
+package Utility;
 
-import javax.sql.DataSource;
+import Model.Partner;
+
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,7 +1,7 @@
 <%@taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
 <%--<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="Model.UserDataUtil" %>
+<%@ page import="Utility.UserDataUtil" %>
 <%@ page import="Model.User" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
@@ -18,7 +18,7 @@
     First name: <input type="text" name="firstName" value="adam"/></br>
     Last name: <input type="text" name="lastName" value="kowalski"/></br>
     Login: <input type="text" name="login" value="aaa"/></br>
-    Password: <input type="text" name="password" value="123"/></br>
+    Password: <input type="text" name="password" value="aaa"/></br>
     Email: <input type="text" name="email" value="123@wp.pl"/></br></br>
     <%--Joined: <input type="date" name="joinedDate"/></br>--%>
 

@@ -23,7 +23,7 @@ public class SendMail {
                 Authenticator authenticator=new Authenticator() {
                     @Override
                     protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("anomalia2016@gmail.com","donald79");
+                return new PasswordAuthentication("fxproject.info@gmail.com","fxproject2017");
             }
         };
 
@@ -33,9 +33,13 @@ public class SendMail {
 
     message.setSubject("Witaj witaj");
     message.setText("aaaaaaaaaaaaaaaaa");
+
+
+
+
     message.setFrom(new InternetAddress("123@wp.pl"));
 
-    message.setRecipient(Message.RecipientType.TO,new InternetAddress("anomalia2016@gmail.com"));
+    message.setRecipient(Message.RecipientType.TO,new InternetAddress("fxproject.info@gmail.com"));
     Transport.send(message);
         System.out.println("Succces: Mail sent!");
         System.out.println("==============================================");
