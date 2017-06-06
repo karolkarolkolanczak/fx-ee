@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.Partner;
+import Utility.ConnectionDbUtil;
 import Utility.PartnerDataUtil;
 
 
@@ -19,22 +20,22 @@ import java.util.List;
 public class AddParnterServlet extends HttpServlet {
 
     Partner partner;
-    PartnerDataUtil partnerDataUtil;
-    List<Partner> listOfPartners;
+    List<Partner> listOfAllPartners;
     Session sessionClass;
     HttpSession session;
-
+    ConnectionDbUtil connectionDbUtil;
     public AddParnterServlet() {
 
         sessionClass = new Session();
-        partnerDataUtil = new PartnerDataUtil();
-        listOfPartners = new ArrayList<>();
+        listOfAllPartners = new ArrayList<>();
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("----------- FROM ADD PARTNER SERVLET -----------");
+
         partner = new Partner();
+        connectionDbUtil=new ConnectionDbUtil();
 
         session = sessionClass.getSession(request);
 
@@ -47,19 +48,21 @@ public class AddParnterServlet extends HttpServlet {
         partner.setEmail(request.getParameter("email"));
 //        partner.setJoinedDate((Date) request.getParameter("joinedDate")));
 
-//      listOfPartners = ((List<Partner>) session.getAttribute("listOfPartners"));
-        listOfPartners=partnerDataUtil.getListOfAllPartners();
+connectionDbUtil.addPartner(partner);
+
 //        listOfPartners = partnerDataUtil.addToListOfPartners(listOfPartners, partner);
 
 //        partnerDataUtil.addToListOfPartners(partner);
 
-        listOfPartners=partnerDataUtil.getListOfAllPartners();
+
 //        session.setAttribute("listOfPartners", listOfPartners);
 
 //      System.out.println("FROM SESSION - LOGIN "+((User)session.getAttribute("userSessionData")).getLogin());
-        System.out.println("------------------");
+        System.out.println("-------ADDING END-----------");
 
-        request.setAttribute("listOfPartners", listOfPartners);
+        listOfAllPartners=connectionDbUtil.getListOfAllPartners();
+
+        request.setAttribute("listOfAllPartners", listOfAllPartners);
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/admin.jsp");
         dispatcher.forward(request, response);

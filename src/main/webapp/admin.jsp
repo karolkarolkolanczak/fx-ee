@@ -83,7 +83,7 @@ Welcome Admin: '<%=user.getLogin()%>'<br><br><br>
     <th></th>
     </tr>
 
-        <c:forEach var="partner" items="${listOfPartners}">
+        <c:forEach var="partner" items="${listOfAllPartners}">
         <tr>
             <td><c:out value="${partner.firstName}" /></td>
             <td><c:out value="${partner.lastName}" /></td>

@@ -27,7 +27,6 @@ public class LoginServlet extends HttpServlet{
     User user;
     List<Partner> listOfAllPartners;
     List<User> listOfAllUsers;
-    PartnerDataUtil partnerDataUtil;
     Session sessionClass;
     HttpSession session;
     UserDataUtil userDataUtil;
@@ -39,7 +38,6 @@ public class LoginServlet extends HttpServlet{
         sessionClass = new Session();
         userDataUtil=new UserDataUtil();
         isLogged=false;
-        partnerDataUtil=new PartnerDataUtil();
         listOfAllPartners=new ArrayList<>();
         listOfAllUsers=new ArrayList<>();
         connectionDbUtil =new ConnectionDbUtil();
@@ -50,13 +48,13 @@ public class LoginServlet extends HttpServlet{
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         listOfAllUsers=connectionDbUtil.getListOfAllUsers();
+        listOfAllPartners=connectionDbUtil.getListOfAllPartners();
         session=sessionClass.getSession(request);
 
         session.setAttribute("isLogged",isLogged(request));
         session.setAttribute("listOfUsers", listOfAllUsers);
 
-
-        request.setAttribute("listOfPartners", listOfAllPartners);
+        request.setAttribute("listOfAllPartners", listOfAllPartners);
 
         if(session.getAttribute("isLogged").equals(true)){
 

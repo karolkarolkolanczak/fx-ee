@@ -37,9 +37,9 @@ public class ConnectionDbUtil {
 
         listOfAllUsers=query.getResultList();
 
-        for(User value: listOfAllUsers){
-            System.out.println("--- USERS --"+value.getLogin()+" "+value.getEmail());
-        }
+//        for(User value: listOfAllUsers){
+//            System.out.println("--- USERS --"+value.getLogin()+" "+value.getEmail());
+//        }
         return listOfAllUsers;
     }
 
@@ -50,26 +50,26 @@ public class ConnectionDbUtil {
 
         listOfAllPartners=query.getResultList();
 
-        for(Partner value: listOfAllPartners){
-            System.out.println("--- Partners --"+value.getLogin()+" "+value.getEmail());
-        }
+//        for(Partner value: listOfAllPartners){
+//            System.out.println("--- Partners --"+value.getLogin()+" "+value.getEmail());
+//        }
         return listOfAllPartners;
     }
 
-     public void addPartner(){
+     public void addPartner(Partner partner){
 
         entityManager.getTransaction().begin();
 
-        Partner partner=new Partner();
-        partner.setFirstName("c");
-        partner.setLastName("c");
-        partner.setEmail("c");
-        partner.setLogin("c");
-        partner.setPassword("c");
+//        partner.setFirstName("z");
+//        partner.setLastName("z");
+//        partner.setEmail("z");
+//        partner.setLogin("z");
+//        partner.setPassword("z");
         entityManager.persist(partner);
 
         entityManager.getTransaction().commit();
-        getListOfAllPartners();
-        entityManager.close();
+         System.out.println("--------------------- ADDING ---------------");
+//        getListOfAllPartners();
+//        entityManager.close();
     }
 }
