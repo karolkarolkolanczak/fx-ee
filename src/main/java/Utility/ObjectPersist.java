@@ -11,24 +11,17 @@ import java.util.List;
 /**
  * Created by a on 2017-06-01.
  */
-public class ConnectionDbUtil {
+public class ObjectPersist {
 
-// @PersistenceUnit(unitName = "fxdatabase-persistence-unit")
-// EntityManager entityManager;
-     EntityManagerFactory emf = Persistence.createEntityManagerFactory("fxdatabase-persistence-unit");
-     EntityManager entityManager = emf.createEntityManager();
+// @PersistenceContext(unitName = "fxdatabase-persistence-unit")
+// private EntityManager entityManager;
+     EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("fxdatabase-persistence-unit");
+     EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-    public ConnectionDbUtil(){
+    public ObjectPersist(){
     }
 
-
-
-
-
-
 ////        String sql = "INSERT INTO `fxdatabase`.`partner` (`idPartner`,`firstName`,`lastName`,`login`,`password`,`email`) VALUES (null,?,?,?,?,?)";
-//
-
 
     public  List<User> getListOfAllUsers(){
 
@@ -56,7 +49,7 @@ public class ConnectionDbUtil {
         return listOfAllPartners;
     }
 
-     public void addPartner(Partner partner){
+     public void addObject(Object object){
 
         entityManager.getTransaction().begin();
 
@@ -65,11 +58,21 @@ public class ConnectionDbUtil {
 //        partner.setEmail("z");
 //        partner.setLogin("z");
 //        partner.setPassword("z");
-        entityManager.persist(partner);
+        entityManager.persist(object);
 
         entityManager.getTransaction().commit();
          System.out.println("--------------------- ADDING ---------------");
 //        getListOfAllPartners();
 //        entityManager.close();
+    }
+
+    public void deleteObject(String className, int id){
+
+        String queryString="DELETE FROM "+className+" WHERE partnerId ="+id;
+        Query query=entityManager.createNativeQuery(queryString);
+
+        entityManager.getTransaction().begin();
+        query.executeUpdate();
+        entityManager.getTransaction().commit();
     }
 }

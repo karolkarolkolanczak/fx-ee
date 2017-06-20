@@ -73,15 +73,15 @@ Welcome Admin: '<%=user.getLogin()%>'<br><br><br>
     LIST OF PARTNERS:</br></br>
 
     <table border="1">
-    <tr>
-    <th>First name</th>
-    <th>Last name</th>
-    <th>Login</th>
-    <th>Password</th>
-    <th>Email</th>
-    <th></th>
-    <th></th>
-    </tr>
+        <tr>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Login</th>
+            <th>Password</th>
+            <th>Email</th>
+            <th></th>
+            <th></th>
+        </tr>
 
         <c:forEach var="partner" items="${listOfAllPartners}">
         <tr>
@@ -91,7 +91,7 @@ Welcome Admin: '<%=user.getLogin()%>'<br><br><br>
             <td><c:out value="${partner.password}" /></td>
             <td><c:out value="${partner.email}" /></td>
             <td>view details</td>
-            <td>delete</td>
+            <td><a href="DeletePartnerServlet?parameterPartnerId=<c:out value='${partner.partnerId}'/>">delete</a></td>
         </tr>
         </c:forEach>
 

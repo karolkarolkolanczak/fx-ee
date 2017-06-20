@@ -7,7 +7,7 @@ import java.util.List;
 
 public class PartnerDataUtil {
     List<Partner> listOfPartners =new ArrayList<>();
-    ConnectionDbUtil connectionDbUtil =new ConnectionDbUtil();
+    ObjectPersist objectPersist =new ObjectPersist();
 
     public List<Partner> getListOfAllPartners(){
 
@@ -15,13 +15,13 @@ public class PartnerDataUtil {
 //        listOfPartners.add(new Partner("zenek","wiaderek","345@wp.pl"));
 //        listOfPartners.add(new Partner("wojtek","ccc","456@wp.pl"));
 
-        listOfPartners=connectionDbUtil.getListOfAllPartners();
+        listOfPartners= objectPersist.getListOfAllPartners();
 
         return listOfPartners;
     }
 
 //    public void addToListOfPartners(Partner partner){
-//        connectionDbUtil.addToListOfPartners(partner);
+//        objectPersist.addToListOfPartners(partner);
 //    }
 
 }

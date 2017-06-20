@@ -19,12 +19,16 @@
             <property name="javax.persistence.jdbc.user" value="admin"/>
             <property name="javax.persistence.jdbc.password" value="admin"/>
 
-            <property name="hibernate.show_sql" value="true"/>
-            <!--<property name="hibernate.hbm2ddl.auto" value="update"/>-->
-            <property name="hibernate.hbm2ddl.auto" value="drop-and-create"/>
-            <property name="hibernate.format_sql" value="true"/>
-            <property name="javax.persistence.sql-load-script-source" value="META-INF/sql/data.sql"/>
+            <!--<property name="hibernate.show_sql" value="true"/>-->
+            <!--&lt;!&ndash;<property name="hibernate.hbm2ddl.auto" value="update"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;<property name="hibernate.hbm2ddl.auto" value="create-drop"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;<property name="hibernate.format_sql" value="true"/>&ndash;&gt;-->
+            <!--<property name="javax.persistence.schema-generation.database.action" value="create"/>-->
+            <!--<property name="javax.persistence.sql-load-script-source" value="META-INF/sql/data.sql"/>-->
 
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.format_sql" value="true"/>
 
         </properties>
     </persistence-unit>

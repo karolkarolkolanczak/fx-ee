@@ -1,8 +1,7 @@
 package Controller;
 
 import Model.Partner;
-import Utility.ConnectionDbUtil;
-import Utility.PartnerDataUtil;
+import Utility.ObjectPersist;
 
 
 import javax.servlet.RequestDispatcher;
@@ -23,11 +22,12 @@ public class AddParnterServlet extends HttpServlet {
     List<Partner> listOfAllPartners;
     Session sessionClass;
     HttpSession session;
-    ConnectionDbUtil connectionDbUtil;
+    ObjectPersist objectPersist;
     public AddParnterServlet() {
 
         sessionClass = new Session();
         listOfAllPartners = new ArrayList<>();
+        objectPersist =new ObjectPersist();
     }
 
     @Override
@@ -35,7 +35,7 @@ public class AddParnterServlet extends HttpServlet {
         System.out.println("----------- FROM ADD PARTNER SERVLET -----------");
 
         partner = new Partner();
-        connectionDbUtil=new ConnectionDbUtil();
+
 
         session = sessionClass.getSession(request);
 
@@ -48,7 +48,7 @@ public class AddParnterServlet extends HttpServlet {
         partner.setEmail(request.getParameter("email"));
 //        partner.setJoinedDate((Date) request.getParameter("joinedDate")));
 
-connectionDbUtil.addPartner(partner);
+objectPersist.addObject(partner);
 
 //        listOfPartners = partnerDataUtil.addToListOfPartners(listOfPartners, partner);
 
@@ -60,7 +60,7 @@ connectionDbUtil.addPartner(partner);
 //      System.out.println("FROM SESSION - LOGIN "+((User)session.getAttribute("userSessionData")).getLogin());
         System.out.println("-------ADDING END-----------");
 
-        listOfAllPartners=connectionDbUtil.getListOfAllPartners();
+        listOfAllPartners= objectPersist.getListOfAllPartners();
 
         request.setAttribute("listOfAllPartners", listOfAllPartners);
 

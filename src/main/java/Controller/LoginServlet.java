@@ -3,8 +3,7 @@ package Controller;
 import Model.Partner;
 
 import Model.User;
-import Utility.ConnectionDbUtil;
-import Utility.PartnerDataUtil;
+import Utility.ObjectPersist;
 import Utility.UserDataUtil;
 
 
@@ -31,7 +30,7 @@ public class LoginServlet extends HttpServlet{
     HttpSession session;
     UserDataUtil userDataUtil;
     Boolean isLogged;
-    ConnectionDbUtil connectionDbUtil;
+    ObjectPersist objectPersist;
 
     public LoginServlet() {
         user = new User();
@@ -40,15 +39,15 @@ public class LoginServlet extends HttpServlet{
         isLogged=false;
         listOfAllPartners=new ArrayList<>();
         listOfAllUsers=new ArrayList<>();
-        connectionDbUtil =new ConnectionDbUtil();
+        objectPersist =new ObjectPersist();
     }
 
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        listOfAllUsers=connectionDbUtil.getListOfAllUsers();
-        listOfAllPartners=connectionDbUtil.getListOfAllPartners();
+        listOfAllUsers= objectPersist.getListOfAllUsers();
+        listOfAllPartners= objectPersist.getListOfAllPartners();
         session=sessionClass.getSession(request);
 
         session.setAttribute("isLogged",isLogged(request));

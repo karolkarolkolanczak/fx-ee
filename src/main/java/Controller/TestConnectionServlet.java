@@ -20,9 +20,9 @@ public class TestConnectionServlet extends HttpServlet {
 
 //        String sqlAllPartners = "select * from partner";
 //
-//        ConnectionDbUtil connectionDbUtil =new ConnectionDbUtil();
+//        ObjectPersist objectPersist =new ObjectPersist();
 //
-//        connectionDbUtil.getListOfPartners();
+//        objectPersist.getListOfPartners();
 
     }
 }
