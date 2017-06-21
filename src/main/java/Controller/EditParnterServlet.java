@@ -3,7 +3,6 @@ package Controller;
 import Model.Partner;
 import Utility.ObjectPersist;
 
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,15 +14,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/AddParnterServlet")
-public class AddParnterServlet extends HttpServlet {
+/**
+ * Created by a on 20/06/2017.
+ */
+@WebServlet("/EditParnterServlet")
+public class EditParnterServlet extends HttpServlet{
 
     Partner partner;
     List<Partner> listOfAllPartners;
     Session sessionClass;
     HttpSession session;
     ObjectPersist objectPersist;
-    public AddParnterServlet() {
+    public EditParnterServlet() {
 
         sessionClass = new Session();
         listOfAllPartners = new ArrayList<>();
@@ -36,7 +38,7 @@ public class AddParnterServlet extends HttpServlet {
         partner = new Partner();
 
         session = sessionClass.getSession(request);
-
+        partner.setPartnerId(Integer.parseInt(request.getParameter("partnerId")));
         partner.setFirstName(request.getParameter("firstName"));
         partner.setLastName(request.getParameter("lastName"));
         partner.setLogin(request.getParameter("login"));
@@ -44,25 +46,11 @@ public class AddParnterServlet extends HttpServlet {
         partner.setEmail(request.getParameter("email"));
 //        partner.setJoinedDate((Date) request.getParameter("joinedDate")));
 
-objectPersist.addObject(partner);
+        objectPersist.updateObject(partner);
 
-//        listOfPartners = partnerDataUtil.addToListOfPartners(listOfPartners, partner);
+        request.setAttribute("partnerDetails",objectPersist.findObjectById(partner.getPartnerId()));
 
-//        partnerDataUtil.addToListOfPartners(partner);
-
-
-//        session.setAttribute("listOfPartners", listOfPartners);
-
-//      System.out.println("FROM SESSION - LOGIN "+((User)session.getAttribute("userSessionData")).getLogin());
-        System.out.println("-------ADDING END-----------");
-
-        listOfAllPartners= objectPersist.getListOfAllPartners();
-
-        request.setAttribute("listOfAllPartners", listOfAllPartners);
-
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/admin.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/partnerDetails.jsp");
         dispatcher.forward(request, response);
     }
-
-
 }

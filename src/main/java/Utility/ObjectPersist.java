@@ -16,20 +16,23 @@ public class ObjectPersist {
 // @PersistenceContext(unitName = "fxdatabase-persistence-unit")
 // private EntityManager entityManager;
      EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("fxdatabase-persistence-unit");
-     EntityManager entityManager = entityManagerFactory.createEntityManager();
+    EntityManager entityManager = entityManagerFactory.createEntityManager();
 
     public ObjectPersist(){
     }
 
-////        String sql = "INSERT INTO `fxdatabase`.`partner` (`idPartner`,`firstName`,`lastName`,`login`,`password`,`email`) VALUES (null,?,?,?,?,?)";
+//        String sql = "INSERT INTO `fxdatabase`.`partner` (`idPartner`,`firstName`,`lastName`,`login`,`password`,`email`) VALUES (null,?,?,?,?,?)";
 
     public  List<User> getListOfAllUsers(){
 
         List<User> listOfAllUsers=new ArrayList<>();
+        entityManager.getTransaction().begin();
         Query query = entityManager.createQuery(" SELECT e FROM User e", User.class);
 
         listOfAllUsers=query.getResultList();
-
+        entityManager.flush();
+        entityManager.clear();
+        entityManager.getTransaction().commit();
 //        for(User value: listOfAllUsers){
 //            System.out.println("--- USERS --"+value.getLogin()+" "+value.getEmail());
 //        }
@@ -39,10 +42,14 @@ public class ObjectPersist {
      public List<Partner> getListOfAllPartners(){
 
         List<Partner> listOfAllPartners=new ArrayList<>();
+
+        entityManager.getTransaction().begin();
         Query query = entityManager.createQuery(" SELECT e FROM Partner e", Partner.class);
 
         listOfAllPartners=query.getResultList();
-
+         entityManager.flush();
+         entityManager.clear();
+         entityManager.getTransaction().commit();
 //        for(Partner value: listOfAllPartners){
 //            System.out.println("--- Partners --"+value.getLogin()+" "+value.getEmail());
 //        }
@@ -59,11 +66,10 @@ public class ObjectPersist {
 //        partner.setLogin("z");
 //        partner.setPassword("z");
         entityManager.persist(object);
-
+        entityManager.flush();
+        entityManager.clear();
         entityManager.getTransaction().commit();
-         System.out.println("--------------------- ADDING ---------------");
-//        getListOfAllPartners();
-//        entityManager.close();
+
     }
 
     public void deleteObject(String className, int id){
@@ -73,6 +79,34 @@ public class ObjectPersist {
 
         entityManager.getTransaction().begin();
         query.executeUpdate();
+        entityManager.flush();
+        entityManager.clear();
         entityManager.getTransaction().commit();
     }
+
+    public void updateObject(Object object){
+
+        Partner partner=(Partner) object;
+
+        entityManager.getTransaction().begin();
+        entityManager.merge(partner);
+        entityManager.flush();
+        entityManager.clear();
+        entityManager.getTransaction().commit();
+    }
+
+    public Object findObjectById(int parnterId){
+
+        entityManager.getTransaction().begin();
+        Partner partner =new Partner();
+
+        partner = entityManager.find(Partner.class, parnterId);
+//      Query query=entityManager.createQuery("SELECT e FROM Partner e WHERE e.partnerId=4", Partner.class);
+//      partner= (Partner) query.getSingleResult();
+        entityManager.flush();
+        entityManager.clear();
+        entityManager.getTransaction().commit();
+        return partner;
+    }
+
 }

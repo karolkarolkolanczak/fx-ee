@@ -11,7 +11,7 @@
 
 <h2>ADMINISTRATOR PANEL</h2><hr>
 <%User user=(User)session.getAttribute("userSessionData");%>
-Welcome Admin: '<%=user.getLogin()%>'<br><br><br>
+Welcome Admin: '<b><%=user.getLogin()%></b>'<br><br><br>
 
 <%--<form action="currencyFeed.jsp">--%>
 <form action="AddParnterServlet" method="GET">
@@ -74,6 +74,7 @@ Welcome Admin: '<%=user.getLogin()%>'<br><br><br>
 
     <table border="1">
         <tr>
+            <th>Partner Id</th>
             <th>First name</th>
             <th>Last name</th>
             <th>Login</th>
@@ -85,12 +86,13 @@ Welcome Admin: '<%=user.getLogin()%>'<br><br><br>
 
         <c:forEach var="partner" items="${listOfAllPartners}">
         <tr>
+            <td><c:out value="${partner.partnerId}" /></td>
             <td><c:out value="${partner.firstName}" /></td>
             <td><c:out value="${partner.lastName}" /></td>
             <td><c:out value="${partner.login}" /></td>
             <td><c:out value="${partner.password}" /></td>
             <td><c:out value="${partner.email}" /></td>
-            <td>view details</td>
+            <td><a href="DetailsPartnerServlet?parameterPartnerId=<c:out value='${partner.partnerId}'/>">view details</a></td>
             <td><a href="DeletePartnerServlet?parameterPartnerId=<c:out value='${partner.partnerId}'/>">delete</a></td>
         </tr>
         </c:forEach>

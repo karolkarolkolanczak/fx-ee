@@ -5,6 +5,7 @@ import java.util.Date;
 
 @Entity
 @Table(name="partner")
+@Cacheable(false)
 public class Partner {
     @Id
     @Column(name="partnerId")
