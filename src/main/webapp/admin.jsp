@@ -1,12 +1,15 @@
 <%@taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
 <%--<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>--%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="Utility.UserDataUtil" %>
 <%@ page import="Model.User" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="Model.Partner" %>
+<%@ page import="java.math.BigDecimal" %>
 <html>
+
 <body>
 
 <h2>ADMINISTRATOR PANEL</h2><hr>
@@ -30,10 +33,7 @@ Welcome Admin: '<b><%=user.getLogin()%></b>'<br><br><br>
 <form action="LogOutServlet" method="get">
     <input type="submit" value="log out">
 </form>
-<hr>
-<jsp:include page="currencyFeed.jsp"/>
 
-<hr>
 <hr>
 
 <%--<%--%>
@@ -66,10 +66,6 @@ Welcome Admin: '<b><%=user.getLogin()%></b>'<br><br><br>
 
 <%--</table>--%>
 
-<hr>
-    <%--<jsp:include page="usersList.jsp"/>--%>
-<hr>
-
     LIST OF PARTNERS:</br></br>
 
     <table border="1">
@@ -84,31 +80,83 @@ Welcome Admin: '<b><%=user.getLogin()%></b>'<br><br><br>
             <th></th>
         </tr>
 
-        <c:forEach var="partner" items="${listOfAllPartners}">
+        <c:forEach var="value" items="${listOfAllPartners}">
         <tr>
-            <td><c:out value="${partner.partnerId}" /></td>
-            <td><c:out value="${partner.firstName}" /></td>
-            <td><c:out value="${partner.lastName}" /></td>
-            <td><c:out value="${partner.login}" /></td>
-            <td><c:out value="${partner.password}" /></td>
-            <td><c:out value="${partner.email}" /></td>
-            <td><a href="DetailsPartnerServlet?parameterPartnerId=<c:out value='${partner.partnerId}'/>">view details</a></td>
-            <td><a href="DeletePartnerServlet?parameterPartnerId=<c:out value='${partner.partnerId}'/>">delete</a></td>
+            <td><c:out value="${value.partnerId}" /></td>
+            <td><c:out value="${value.firstName}" /></td>
+            <td><c:out value="${value.lastName}" /></td>
+            <td><c:out value="${value.login}" /></td>
+            <td><c:out value="${value.password}" /></td>
+            <td><c:out value="${value.email}" /></td>
+            <td><a href="DetailsPartnerServlet?parameterPartnerId=<c:out value='${value.partnerId}'/>">view details</a></td>
+            <td><a href="DeletePartnerServlet?parameterPartnerId=<c:out value='${value.partnerId}'/>">delete</a></td>
         </tr>
         </c:forEach>
 
     </table>
 </br></br>
-<form action="LinkServlet" method="get">
-    <input type="submit" value="link"/>
-</form>
+
+    <table border="1">
+        <tr>
+            <th>Symbol</th>
+            <th>Bid</th>
+            <th>Ask</th>
+            <th>Change</th>
+            <th></th>
+        </tr>
+        <c:forEach var="value" items="${listOfQuotes}">
+            <tr>
+                <td><c:out value="${value.symbol}" /></td>
+                <c:if test="${value.change >= 0.0001}">
+                    <td class="greenColor">
+                        <c:out value="${value.bid}" /></td>
+                </c:if>
+                <c:if test="${value.change <= -0.0001}">
+                    <td class="redColor"><c:out value="${value.bid}" /></td>
+                </c:if>
+                <c:if test="${value.change >= 0.0001}">
+                    <td class="greenColor"><c:out value="${value.ask}" /></td>
+                </c:if>
+                <c:if test="${value.change <= -0.0001}">
+                    <td class="redColor"><c:out value="${value.ask}" /></td>
+                </c:if>
+                <c:if test="${value.change >= 0.0001}">
+                    <td class="greenColor"><c:out value="${value.change}" /></td>
+                </c:if>
+                <c:if test="${value.change <= -0.0001}">
+                    <td class="redColor"><c:out value="${value.change}"/></td>
+                </c:if>
+                <c:if test="${value.change >= 0.0001}">
+                    <td>
+                        <svg id="icon-up" fill="green" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/></svg>
+                    </td>
+                </c:if>
+                <c:if test="${value.change <= -0.0001}">
+                    <td>
+                        <svg id="icon-down" fill="red" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"/></svg>
+                    </td>
+                </c:if>
+            </tr>
+        </c:forEach>
+    </table>
+<h6>*source: <a href="https://www.instaforex.com" target="_blank" >https://www.instaforex.com</a></h6>
+
 
 <a href="LinkServlet?param1='ala ma kota 1 '">mylink 1 </a><br>
 <a href="LinkServlet?param1='ala ma kota 2 '">mylink 2 </a><br>
 <a href="LinkServlet?param1='ala ma kota 3'">mylink 3 </a><br>
 <a href="LinkServlet?param1='ala ma kota 4'">mylink 4 </a><br>
+<form action="LinkServlet" method="get">
+    <input type="submit" value="link"/>
+</form>
 
+<hr>
+<jsp:include page="currencyFeed.jsp"/>
 
-
+<p hidden id="icon-swap"><svg  fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3L5 6.99h3V14h2V6.99h3L9 3z"/><path d="M0 0h24v24H0z" fill="none"/></svg></p>
+<svg id="icon-up" fill="green" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/></svg>
+<svg id="icon-down" fill="red" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"/></svg>
+<svg id="icon-delete" fill="red" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zm2.46-7.12l1.41-1.41L12 12.59l2.12-2.12 1.41 1.41L13.41 14l2.12 2.12-1.41 1.41L12 15.41l-2.12 2.12-1.41-1.41L10.59 14l-2.13-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+<link rel="stylesheet" type="text/css" href="css/style.css">
 </body>
 </html>

@@ -2,7 +2,9 @@ package Controller;
 
 import Model.Partner;
 
+import Model.QuotesData;
 import Model.User;
+import Utility.FxQuotesParser;
 import Utility.ObjectPersist;
 import Utility.UserDataUtil;
 
@@ -31,6 +33,8 @@ public class LoginServlet extends HttpServlet{
     UserDataUtil userDataUtil;
     Boolean isLogged;
     ObjectPersist objectPersist;
+    List<QuotesData>listOfQuotes;
+    FxQuotesParser fxQuotesParser;
 
     public LoginServlet() {
         user = new User();
@@ -40,6 +44,8 @@ public class LoginServlet extends HttpServlet{
         listOfAllPartners=new ArrayList<>();
         listOfAllUsers=new ArrayList<>();
         objectPersist =new ObjectPersist();
+        listOfQuotes=new ArrayList<>();
+        fxQuotesParser=new FxQuotesParser();
     }
 
 
@@ -54,6 +60,13 @@ public class LoginServlet extends HttpServlet{
         session.setAttribute("listOfUsers", listOfAllUsers);
 
         request.setAttribute("listOfAllPartners", listOfAllPartners);
+
+        try {
+            listOfQuotes=fxQuotesParser.getListOfQuotes();
+            request.setAttribute("listOfQuotes",listOfQuotes);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         if(session.getAttribute("isLogged").equals(true)){
 
