@@ -9,8 +9,25 @@
 <%@ page import="Model.Partner" %>
 <%@ page import="java.math.BigDecimal" %>
 <html>
+<%--<head>--%>
+    <%--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.0/jquery.min.js"></script>--%>
+    <%--<script>--%>
+        <%--$(document).ready(function() {--%>
+            <%--var reloadData = 0; // store timer--%>
 
+            <%--// load data on page load, which sets timeout to reload again--%>
+            <%--setInterval( "updateShouts()", 5000 );--%>
+        <%--});--%>
+
+        <%--function updateShouts(){--%>
+            <%--// Assuming we have #shoutbox--%>
+            <%--$('#load_me').load('admin.jsp');--%>
+        <%--}--%>
+    <%--</script>--%>
+<%--</head>--%>
 <body>
+
+<jsp:include page="/QuotesData" />
 
 <h2>ADMINISTRATOR PANEL</h2><hr>
 <%User user=(User)session.getAttribute("userSessionData");%>
@@ -78,6 +95,7 @@ Welcome Admin: '<b><%=user.getLogin()%></b>'<br><br><br>
             <th>Email</th>
             <th></th>
             <th></th>
+            <th></th>
         </tr>
 
         <c:forEach var="value" items="${listOfAllPartners}">
@@ -88,70 +106,86 @@ Welcome Admin: '<b><%=user.getLogin()%></b>'<br><br><br>
             <td><c:out value="${value.login}" /></td>
             <td><c:out value="${value.password}" /></td>
             <td><c:out value="${value.email}" /></td>
-            <td><a href="DetailsPartnerServlet?parameterPartnerId=<c:out value='${value.partnerId}'/>">view details</a></td>
-            <td><a href="DeletePartnerServlet?parameterPartnerId=<c:out value='${value.partnerId}'/>">delete</a></td>
+            <td><a href="EditParnterServlet?parameterPartnerId=<c:out value='${value.partnerId}'/>"> edit </a></td>
+            <td><a href="DetailsPartnerServlet?parameterPartnerId=<c:out value='${value.partnerId}'/>"> view details </a></td>
+            <td><a href="DeletePartnerServlet?parameterPartnerId=<c:out value='${value.partnerId}'/>"> delete </a></td>
         </tr>
         </c:forEach>
 
     </table>
 </br></br>
 
-    <table border="1">
+
+<div id="load_me">
+    <%--<jsp:include page="currencyFeed.jsp"/>--%>
+        <jsp:include page="/QuotesData"/>
+</div>
+<%--<jsp:include page="currencyFeed.jsp"/>--%>
+
+<%--<jsp:include page="currencyFeed.jsp"/>--%>
+
+<b>CURRENCY FEED</b>
+
+<table border="1">
+    <tr>
+        <th>Symbol</th>
+        <th>Bid</th>
+        <th>Ask</th>
+        <th>Change</th>
+        <th></th>
+    </tr>
+    <c:forEach var="value" items="${listOfQuotes}">
         <tr>
-            <th>Symbol</th>
-            <th>Bid</th>
-            <th>Ask</th>
-            <th>Change</th>
-            <th></th>
+            <td><c:out value="${value.symbol}" /></td>
+            <c:if test="${value.change >= 0.0001}">
+                <td class="greenColor">
+                    <c:out value="${value.bid}" /></td>
+            </c:if>
+            <c:if test="${value.change <= -0.0001}">
+                <td class="redColor"><c:out value="${value.bid}" /></td>
+            </c:if>
+            <c:if test="${value.change >= 0.0001}">
+                <td class="greenColor"><c:out value="${value.ask}" /></td>
+            </c:if>
+            <c:if test="${value.change <= -0.0001}">
+                <td class="redColor"><c:out value="${value.ask}" /></td>
+            </c:if>
+            <c:if test="${value.change >= 0.0001}">
+                <td class="greenColor"><c:out value="${value.change}" /></td>
+            </c:if>
+            <c:if test="${value.change <= -0.0001}">
+                <td class="redColor"><c:out value="${value.change}"/></td>
+            </c:if>
+            <c:if test="${value.change >= 0.0001}">
+                <td>
+                    <svg id="icon-up" fill="green" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/></svg>
+                </td>
+            </c:if>
+            <c:if test="${value.change <= -0.0001}">
+                <td>
+                    <svg id="icon-down" fill="red" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"/></svg>
+                </td>
+            </c:if>
         </tr>
-        <c:forEach var="value" items="${listOfQuotes}">
-            <tr>
-                <td><c:out value="${value.symbol}" /></td>
-                <c:if test="${value.change >= 0.0001}">
-                    <td class="greenColor">
-                        <c:out value="${value.bid}" /></td>
-                </c:if>
-                <c:if test="${value.change <= -0.0001}">
-                    <td class="redColor"><c:out value="${value.bid}" /></td>
-                </c:if>
-                <c:if test="${value.change >= 0.0001}">
-                    <td class="greenColor"><c:out value="${value.ask}" /></td>
-                </c:if>
-                <c:if test="${value.change <= -0.0001}">
-                    <td class="redColor"><c:out value="${value.ask}" /></td>
-                </c:if>
-                <c:if test="${value.change >= 0.0001}">
-                    <td class="greenColor"><c:out value="${value.change}" /></td>
-                </c:if>
-                <c:if test="${value.change <= -0.0001}">
-                    <td class="redColor"><c:out value="${value.change}"/></td>
-                </c:if>
-                <c:if test="${value.change >= 0.0001}">
-                    <td>
-                        <svg id="icon-up" fill="green" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/></svg>
-                    </td>
-                </c:if>
-                <c:if test="${value.change <= -0.0001}">
-                    <td>
-                        <svg id="icon-down" fill="red" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"/></svg>
-                    </td>
-                </c:if>
-            </tr>
-        </c:forEach>
-    </table>
+    </c:forEach>
+</table>
 <h6>*source: <a href="https://www.instaforex.com" target="_blank" >https://www.instaforex.com</a></h6>
+
+
 
 
 <a href="LinkServlet?param1='ala ma kota 1 '">mylink 1 </a><br>
 <a href="LinkServlet?param1='ala ma kota 2 '">mylink 2 </a><br>
 <a href="LinkServlet?param1='ala ma kota 3'">mylink 3 </a><br>
 <a href="LinkServlet?param1='ala ma kota 4'">mylink 4 </a><br>
+
 <form action="LinkServlet" method="get">
     <input type="submit" value="link"/>
 </form>
 
 <hr>
-<jsp:include page="currencyFeed.jsp"/>
+
+
 
 <p hidden id="icon-swap"><svg  fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3L5 6.99h3V14h2V6.99h3L9 3z"/><path d="M0 0h24v24H0z" fill="none"/></svg></p>
 <svg id="icon-up" fill="green" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/></svg>

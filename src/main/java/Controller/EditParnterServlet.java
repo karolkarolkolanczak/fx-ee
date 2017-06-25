@@ -20,37 +20,25 @@ import java.util.List;
 @WebServlet("/EditParnterServlet")
 public class EditParnterServlet extends HttpServlet{
 
-    Partner partner;
-    List<Partner> listOfAllPartners;
-    Session sessionClass;
-    HttpSession session;
-    ObjectPersist objectPersist;
-    public EditParnterServlet() {
 
-        sessionClass = new Session();
-        listOfAllPartners = new ArrayList<>();
-        objectPersist =new ObjectPersist();
+    ObjectPersist objectPersist;
+    Partner partner;
+
+    public EditParnterServlet() {
+        objectPersist=new ObjectPersist();
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         partner = new Partner();
+        String className=partner.getClass().getSimpleName().toLowerCase();
+        int partnerId= Integer.parseInt(request.getParameter("parameterPartnerId"));
 
-        session = sessionClass.getSession(request);
-        partner.setPartnerId(Integer.parseInt(request.getParameter("partnerId")));
-        partner.setFirstName(request.getParameter("firstName"));
-        partner.setLastName(request.getParameter("lastName"));
-        partner.setLogin(request.getParameter("login"));
-        partner.setPassword(request.getParameter("password"));
-        partner.setEmail(request.getParameter("email"));
-//        partner.setJoinedDate((Date) request.getParameter("joinedDate")));
+        partner=(Partner)objectPersist.findObjectById(partnerId);
+        request.setAttribute("partnerDetails",partner);
 
-        objectPersist.updateObject(partner);
-
-        request.setAttribute("partnerDetails",objectPersist.findObjectById(partner.getPartnerId()));
-
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/partnerDetails.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/editPartner.jsp");
         dispatcher.forward(request, response);
     }
 }

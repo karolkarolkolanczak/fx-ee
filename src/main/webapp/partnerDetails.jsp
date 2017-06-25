@@ -23,6 +23,7 @@ Welcome Admin: '<b><%=user.getLogin()%></b>'<br><br><br>
             <th>Login</th>
             <th>Password</th>
             <th>Email</th>
+            <th>Total Profit / Bonus (for period)</th>
 
         </tr>
         <tr>
@@ -36,18 +37,33 @@ Welcome Admin: '<b><%=user.getLogin()%></b>'<br><br><br>
 
     </table></br></br>
 
-    <form action="EditParnterServlet" method="GET">
-        <b>Edit Partner:</b> </br></br>
-        <input type="hidden" name="partnerId" value="<c:out value="${partnerDetails.partnerId}" />"/>
-        First name: <input type="text" name="firstName" value="<c:out value="${partnerDetails.firstName}" />"/></br>
-        Last name: <input type="text" name="lastName" value="<c:out value="${partnerDetails.lastName}" />"/></br>
-        Login: <input type="text" name="login" value="<c:out value="${partnerDetails.login}"/>"/></br>
-        Password: <input type="text" name="password" value="<c:out value="${partnerDetails.password}"/>"/></br>
-        Email: <input type="text" name="email" value="<c:out value="${partnerDetails.email}"/>"/></br></br>
-        <%--Joined: <input type="date" name="joinedDate"/></br>--%>
+<hr>
 
-        <input type="submit" value="Save"/>
-    </form>
+    <b>Transactions list (closed trades):</b> </br></br>
+
+    <table border="1">
+    <tr>
+        <th>Transaction Id</th>
+        <th>Symbol</th>
+        <th>Open Date</th>
+        <th>Close Date</th>
+        <th>Action</th>
+        <th>Open Price</th>
+        <th>Close Price</th>
+        <th>Lots</th>
+        <th>Profit</th>
+
+    </tr>
+    <tr>
+        <td><c:out value="${partnerDetails.partnerId}"/></td>
+        <td><c:out value="${partnerDetails.firstName}"/></td>
+        <td><c:out value="${partnerDetails.lastName}"/></td>
+        <td><c:out value="${partnerDetails.login}"/></td>
+        <td><c:out value="${partnerDetails.password}"/></td>
+        <td><c:out value="${partnerDetails.email}"/></td>
+    </tr>
+
+</table></br>
 
     <hr>
     <form action="LogOutServlet" method="get">
