@@ -33,7 +33,16 @@ lub
 - becouse of embaded h2 connector driver to achive mysql
 http://www.journaldev.com/2509/java-datasource-jdbc-datasource-example
 
-- at first in "persistence.xml" use <property name="hibernate.hbm2ddl.auto" value="update"/> to create and map tables
-later " <property name="hibernate.hbm2ddl.auto" value="drop-and-create"/>"
+- at first in "persistence.xml"
+
+   <!--(Part 1) For the first init untag (only once to create)-->
+            <!--<property name="javax.persistence.schema-generation.database.action" value="create"/>-->
+            <!--<property name="javax.persistence.sql-load-script-source" value="META-INF/sql/data.sql"/>-->
+
+    <!--(Part 2) After initialization tag it-->
+    <property name="hibernate.show_sql" value="true"/>
+    <property name="hibernate.hbm2ddl.auto" value="update"/>
+    <!--<property name="hibernate.hbm2ddl.auto" value="create-drop"/>-->
+    <property name="hibernate.format_sql" value="true"/>
 
 

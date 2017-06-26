@@ -16,6 +16,7 @@ import java.util.Locale;
 /**
  * Created by a on 22/06/2017.
  */
+// JSON Parser
 public class FxQuotesParser {
 
     List<QuotesData>listOfQuotes=new ArrayList<>();

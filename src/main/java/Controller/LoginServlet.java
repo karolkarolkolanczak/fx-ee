@@ -1,14 +1,12 @@
 package Controller;
 
+import Model.ClosedTradesTransaction;
 import Model.Partner;
 
-import Model.QuotesData;
 import Model.User;
-import Utility.FxQuotesParser;
+import Utility.ClosedTradesTransactionCsvReader;
 import Utility.ObjectPersist;
 import Utility.UserDataUtil;
-
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +32,7 @@ public class LoginServlet extends HttpServlet{
     UserDataUtil userDataUtil;
     Boolean isLogged;
     ObjectPersist objectPersist;
-
+    List<ClosedTradesTransaction> closedTradesTransactionslist;
 
     public LoginServlet() {
         user = new User();
@@ -43,8 +42,9 @@ public class LoginServlet extends HttpServlet{
         listOfAllPartners=new ArrayList<>();
         listOfAllUsers=new ArrayList<>();
         objectPersist =new ObjectPersist();
+        closedTradesTransactionslist=new ArrayList<>();
+        init();
     }
-
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -52,10 +52,8 @@ public class LoginServlet extends HttpServlet{
         listOfAllUsers= objectPersist.getListOfAllUsers();
         listOfAllPartners= objectPersist.getListOfAllPartners();
         session=sessionClass.getSession(request);
-
         session.setAttribute("isLogged",isLogged(request));
         session.setAttribute("listOfUsers", listOfAllUsers);
-
         request.setAttribute("listOfAllPartners", listOfAllPartners);
 
         if(session.getAttribute("isLogged").equals(true)){
@@ -68,18 +66,15 @@ public class LoginServlet extends HttpServlet{
             RequestDispatcher dispatcher=request.getRequestDispatcher("/login.jsp");
             dispatcher.forward(request,response);
         }
-
     }
+
     Boolean isLogged(HttpServletRequest request){
 
         for(User value: listOfAllUsers){
             if(value.getLogin().equals(request.getParameter("login")) && value.getPassword().equals(request.getParameter("password"))){
-
                 user.setLogin(request.getParameter("login"));
                 user.setPassword(request.getParameter("password"));
-
                 session.setAttribute("userSessionData",user);
-
                 isLogged=true;
                 System.out.println("--> Logged succesfully");
                 return isLogged;
@@ -90,6 +85,27 @@ public class LoginServlet extends HttpServlet{
             }
         }
         return isLogged;
+    }
+
+    public void init(){
+        System.out.println("----------------------------SIZE of table 'ClosedTradesTransaction': "+objectPersist.getClosedTradesTransactionslist().size());
+
+        // check if in database in "ClosedTradesTransaction" table containse already 1000 records
+        if(objectPersist.getClosedTradesTransactionslist().size()==0 || objectPersist.getClosedTradesTransactionslist().size()<1000){
+            try {
+                ClosedTradesTransactionCsvReader closedTradesTransactionCsvReader=new ClosedTradesTransactionCsvReader();
+                closedTradesTransactionslist=closedTradesTransactionCsvReader.getClosedTradesTransactionslist();
+
+                for(ClosedTradesTransaction value: closedTradesTransactionslist){
+                    System.out.println(value.getTransactionId()+" "+value.getSymbol()+" "+value.getProfit());
+                }
+                objectPersist.addclosedTradesTransactionslist(closedTradesTransactionslist);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
 

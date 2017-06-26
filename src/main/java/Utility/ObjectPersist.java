@@ -1,5 +1,6 @@
 package Utility;
 
+import Model.ClosedTradesTransaction;
 import Model.Partner;
 import Model.User;
 
@@ -28,7 +29,6 @@ public class ObjectPersist {
         List<User> listOfAllUsers=new ArrayList<>();
         entityManager.getTransaction().begin();
         Query query = entityManager.createQuery(" SELECT e FROM User e", User.class);
-
         listOfAllUsers=query.getResultList();
         entityManager.flush();
         entityManager.clear();
@@ -45,11 +45,10 @@ public class ObjectPersist {
 
         entityManager.getTransaction().begin();
         Query query = entityManager.createQuery(" SELECT e FROM Partner e", Partner.class);
-
         listOfAllPartners=query.getResultList();
-         entityManager.flush();
-         entityManager.clear();
-         entityManager.getTransaction().commit();
+        entityManager.flush();
+        entityManager.clear();
+        entityManager.getTransaction().commit();
 //        for(Partner value: listOfAllPartners){
 //            System.out.println("--- Partners --"+value.getLogin()+" "+value.getEmail());
 //        }
@@ -59,7 +58,6 @@ public class ObjectPersist {
      public void addObject(Object object){
 
         entityManager.getTransaction().begin();
-
 //        partner.setFirstName("z");
 //        partner.setLastName("z");
 //        partner.setEmail("z");
@@ -69,7 +67,28 @@ public class ObjectPersist {
         entityManager.flush();
         entityManager.clear();
         entityManager.getTransaction().commit();
+    }
 
+    public void addclosedTradesTransactionslist(List<ClosedTradesTransaction> listOfObjects){
+
+        for(int i=0;i< listOfObjects.size();i++){
+            entityManager.getTransaction().begin();
+            entityManager.persist(listOfObjects.get(i));
+            entityManager.flush();
+            entityManager.clear();
+            entityManager.getTransaction().commit();
+        }
+    }
+
+    public List<ClosedTradesTransaction> getClosedTradesTransactionslist(){
+        List<ClosedTradesTransaction>closedTradesTransactionslist=new ArrayList<>();
+        entityManager.getTransaction().begin();
+        Query query = entityManager.createQuery(" SELECT e FROM ClosedTradesTransaction e", ClosedTradesTransaction.class);
+        closedTradesTransactionslist=query.getResultList();
+        entityManager.flush();
+        entityManager.clear();
+        entityManager.getTransaction().commit();
+        return closedTradesTransactionslist;
     }
 
     public void deleteObject(String className, int id){
