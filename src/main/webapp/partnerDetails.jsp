@@ -25,7 +25,6 @@ Welcome Admin: '<b><%=user.getLogin()%></b>'<br><br><br>
             <th>Password</th>
             <th>Email</th>
             <th>Total Profit / Bonus (for period)</th>
-
         </tr>
         <tr>
             <td><c:out value="${partnerDetails.partnerId}"/></td>
@@ -39,22 +38,27 @@ Welcome Admin: '<b><%=user.getLogin()%></b>'<br><br><br>
     </table></br></br>
 
 <hr>
+    <b>Transactions list (closed trades):</b> </br>
 
-    <b>Transactions list (closed trades):</b> </br></br>
+<form action="DetailsPartnerFilterServlet" method="GET">
+    <input type="hidden" name="parameterPartnerId" value="<c:out value="${partnerDetails.partnerId}" />"/>
+    Trades from: <input type="date" name="closedTradesFrom" value="2017-01-01"/></br>
+    Trades To: <input type="date" name="closedTradesTo" value="2017-02-01"/></br>
+    <input type="submit" value="Search"/>
+</form></br>
 
     <table border="1">
-    <tr>
-        <th>Transaction Id</th>
-        <th>Symbol</th>
-        <th>Open Date</th>
-        <th>Close Date</th>
-        <th>Action</th>
-        <th>Open Price</th>
-        <th>Close Price</th>
-        <th>Lots</th>
-        <th>Profit</th>
-
-    </tr>
+            <tr>
+                <th>Transaction Id</th>
+                <th>Symbol</th>
+                <th>Open Date</th>
+                <th>Close Date</th>
+                <th>Action</th>
+                <th>Open Price</th>
+                <th>Close Price</th>
+                <th>Lots</th>
+                <th>Profit</th>
+            </tr>
         <c:forEach var="value" items="${closedTradesTransactionslist}">
             <tr>
                 <td><c:out value="${value.transactionId}" /></td>
@@ -70,8 +74,9 @@ Welcome Admin: '<b><%=user.getLogin()%></b>'<br><br><br>
               <%--<td><a href="DeletePartnerServlet?parameterPartnerId=<c:out value='${value.partnerId}'/>"> delete </a></td>--%>
             </tr>
         </c:forEach>
+    </table></br>
 
-</table></br>
+
 
     <hr>
     <form action="LogOutServlet" method="get">
