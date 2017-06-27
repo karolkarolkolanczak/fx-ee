@@ -12,13 +12,15 @@ public class ClosedTradesTransaction {
     @Column(name="transactionId")
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int transactionId;
-    private Date openDate;
-    private Date closeDate;
     private String symbol;
+    @Temporal(TemporalType.DATE)
+    private Date openDate;
+    @Temporal(TemporalType.DATE)
+    private Date closeDate;
     private String action;
-    private double lots;
     private double openPrice;
     private double closePrice;
+    private double lots;
     private double profit;
 
     public ClosedTradesTransaction() {

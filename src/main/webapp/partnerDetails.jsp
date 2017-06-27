@@ -1,5 +1,6 @@
 <%@taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
 <%--<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>--%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="Utility.UserDataUtil" %>
 <%@ page import="Model.User" %>
@@ -54,14 +55,21 @@ Welcome Admin: '<b><%=user.getLogin()%></b>'<br><br><br>
         <th>Profit</th>
 
     </tr>
-    <tr>
-        <td><c:out value="${partnerDetails.partnerId}"/></td>
-        <td><c:out value="${partnerDetails.firstName}"/></td>
-        <td><c:out value="${partnerDetails.lastName}"/></td>
-        <td><c:out value="${partnerDetails.login}"/></td>
-        <td><c:out value="${partnerDetails.password}"/></td>
-        <td><c:out value="${partnerDetails.email}"/></td>
-    </tr>
+        <c:forEach var="value" items="${closedTradesTransactionslist}">
+            <tr>
+                <td><c:out value="${value.transactionId}" /></td>
+                <td><c:out value="${value.symbol}" /></td>
+                <%--<fmt:formatDate type="date" value="${value.openDate}" pattern="yyyy-MM-dd" />--%>
+                <td><c:out value="${value.openDate}" /></td>
+                <td><c:out value="${value.closeDate}" /></td>
+                <td><c:out value="${value.action}" /></td>
+                <td><c:out value="${value.openPrice}" /></td>
+                <td><c:out value="${value.closePrice}" /></td>
+                <td><c:out value="${value.lots}" /></td>
+                <td><c:out value="${value.profit}" /></td>
+              <%--<td><a href="DeletePartnerServlet?parameterPartnerId=<c:out value='${value.partnerId}'/>"> delete </a></td>--%>
+            </tr>
+        </c:forEach>
 
 </table></br>
 

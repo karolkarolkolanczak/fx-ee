@@ -89,7 +89,6 @@ public class LoginServlet extends HttpServlet{
 
     public void init(){
         System.out.println("----------------------------SIZE of table 'ClosedTradesTransaction': "+objectPersist.getClosedTradesTransactionslist().size());
-
         // check if in database in "ClosedTradesTransaction" table containse already 1000 records
         if(objectPersist.getClosedTradesTransactionslist().size()==0 || objectPersist.getClosedTradesTransactionslist().size()<1000){
             try {

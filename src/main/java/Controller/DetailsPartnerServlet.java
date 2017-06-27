@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.ClosedTradesTransaction;
 import Model.Partner;
 import Utility.ObjectPersist;
 
@@ -21,9 +22,11 @@ public class DetailsPartnerServlet extends HttpServlet{
 
     ObjectPersist objectPersist;
     Partner partner;
+    List<ClosedTradesTransaction> closedTradesTransactionslist;
 
     public DetailsPartnerServlet() {
         objectPersist=new ObjectPersist();
+        closedTradesTransactionslist=new ArrayList<>();
     }
 
     @Override
@@ -36,7 +39,10 @@ public class DetailsPartnerServlet extends HttpServlet{
         System.out.println("------ Partner ID: "+partnerId);
 
         partner=(Partner)objectPersist.findObjectById(partnerId);
+        closedTradesTransactionslist=objectPersist.getClosedTradesTransactionslist();
+
         request.setAttribute("partnerDetails",partner);
+        request.setAttribute("closedTradesTransactionslist", closedTradesTransactionslist);
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/partnerDetails.jsp");
         dispatcher.forward(request, response);
