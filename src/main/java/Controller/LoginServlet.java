@@ -6,6 +6,7 @@ import Model.Partner;
 import Model.User;
 import Utility.ClosedTradesTransactionCsvReader;
 import Utility.ObjectPersist;
+import Utility.StrategyChooser;
 import Utility.UserDataUtil;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -88,23 +89,36 @@ public class LoginServlet extends HttpServlet{
     }
 
     public void init(){
-        System.out.println("----------------------------SIZE of table 'ClosedTradesTransaction': "+objectPersist.getClosedTradesTransactionslist().size());
-        // check if in database in "ClosedTradesTransaction" table containse already 1000 records
-        if(objectPersist.getClosedTradesTransactionslist().size()==0 || objectPersist.getClosedTradesTransactionslist().size()<1000){
+        List<String> listOfClosedTradesStrategiesResources=new ArrayList<>();
+        List<ClosedTradesTransaction> listOfClosedTradesStrategies=new ArrayList<>();
+
+        StrategyChooser strategyChooser=new StrategyChooser();
+
+        listOfClosedTradesStrategiesResources=strategyChooser.getListOfClosedTradesStrategiesResources();
+        listOfClosedTradesStrategies=strategyChooser.getListOfClosedTradesStrategies();
+
+
+    for(int i=0;i<listOfClosedTradesStrategies.size();i++){
+        if (objectPersist.getClosedTradesTransactionslist(listOfClosedTradesStrategies.get(i)).size()==0){
             try {
                 ClosedTradesTransactionCsvReader closedTradesTransactionCsvReader=new ClosedTradesTransactionCsvReader();
-                closedTradesTransactionslist=closedTradesTransactionCsvReader.getClosedTradesTransactionslist();
+                closedTradesTransactionslist=closedTradesTransactionCsvReader.getClosedTradesTransactionslist(listOfClosedTradesStrategies.get(i));
+
+                objectPersist.addclosedTradesTransactionslist(closedTradesTransactionslist);
 
                 for(ClosedTradesTransaction value: closedTradesTransactionslist){
                     System.out.println(value.getTransactionId()+" "+value.getSymbol()+" "+value.getProfit());
                 }
-                objectPersist.addclosedTradesTransactionslist(closedTradesTransactionslist);
+
             } catch (ParseException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+        else return;
+}
+
     }
 }
 

@@ -1,10 +1,10 @@
 package Utility;
 
 import Model.ClosedTradesTransaction;
+import Model.ClosedTradesTransactionStrategy1;
+import Model.ClosedTradesTransactionStrategy2;
 import com.opencsv.CSVReader;
 
-import javax.validation.constraints.NotNull;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
@@ -22,21 +22,25 @@ import java.util.List;
 // description: http://opencsv.sourceforge.net/
 // download: https://sourceforge.net/projects/opencsv/
 public class ClosedTradesTransactionCsvReader {
-    static int counter =1000;
-    private List<ClosedTradesTransaction> closedTradesTransactionslist;
+    int counter =0;
+    ClosedTradesTransaction closedTradesTransaction;
+    List<ClosedTradesTransaction> closedTradesTransactionslist;
 
-    // musi to byc by zlapac sciezke relatywna  zklonowana w targecie w "WEB-INF/classes/eurusd.csv"
-    URL u = this.getClass().getResource("/closedTradesEurUsdStrategy1.csv");
-    String urlToString = u.toString().substring(5); // to by obciac tekst "vfs..."
-
-    public ClosedTradesTransactionCsvReader() throws IOException, ParseException {
-        System.out.println("===== urlToString: " + urlToString);
-
-//System.out.println("+++++++++++"+u.getPath());
+    public ClosedTradesTransactionCsvReader() {
+        closedTradesTransaction=new ClosedTradesTransaction();
         closedTradesTransactionslist = new ArrayList<>();
+    }
 
-//  CSVReader reader = new CSVReader(new FileReader("C:\\java\\EEFive\\src\\main\\resources\\eurusd.csv"), ',');
-//CSVReader reader = new CSVReader(new FileReader("C:\\java3\\1part-java\\src\\main\\java\\com\\projectForex\\data\\eurusd.csv"), ',');
+    public List<ClosedTradesTransaction> getClosedTradesTransactionslist(ClosedTradesTransaction closedTradesTransaction) throws IOException, ParseException {
+
+
+        //        "/Transactions/closedTradesStrategy4.csv"
+        URL u = this.getClass().getResource(closedTradesTransaction.getResource());
+
+        String urlToString = u.toString().substring(5); // to by obciac tekst "vfs..."
+
+        //  CSVReader reader = new CSVReader(new FileReader("C:\\java\\EEFive\\src\\main\\resources\\eurusd.csv"), ',');
+        //CSVReader reader = new CSVReader(new FileReader("C:\\java3\\1part-java\\src\\main\\java\\com\\projectForex\\data\\eurusd.csv"), ',');
         CSVReader reader = new CSVReader(new FileReader(urlToString), ',');
 
         //read all lines at once
@@ -46,13 +50,22 @@ public class ClosedTradesTransactionCsvReader {
         //skip header row
         iterator.next();
 
-        while (iterator.hasNext()   && counter>0 ) {
-            counter--;
-            System.out.println("COUNTER: "+counter);
-            String[] record = iterator.next();
-            ClosedTradesTransaction closedTradesTransaction = new ClosedTradesTransaction();
+            while (iterator.hasNext() && counter < 3) {
 
-                //              0          1        2     3     4     5  6       7           8       9     10      11                                               12
+                ClosedTradesTransaction closedTradesTransactionTemp=new ClosedTradesTransaction();
+                if(closedTradesTransaction instanceof ClosedTradesTransactionStrategy1){
+                    closedTradesTransactionTemp=new ClosedTradesTransactionStrategy1();
+
+                }
+                if(closedTradesTransaction instanceof ClosedTradesTransactionStrategy2){
+                    closedTradesTransactionTemp=new ClosedTradesTransactionStrategy2();
+
+                }
+                counter++;
+                System.out.println("COUNTER: " + counter);
+                String[] record = iterator.next();
+
+//              0          1        2     3     4     5  6       7           8       9     10      11                                               12
 //          Open Date,Close Date,Symbol,Action,Lots, SL, TP, Open Price,Close Price,Pips,Profit,Duration (DD:HH:MM:SS),Change %
                 SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
                 String dateInString1 = record[0].substring(0, 10);
@@ -66,30 +79,25 @@ public class ClosedTradesTransactionCsvReader {
                 System.out.println("opendate: " + opendate + " " + opendate.getClass() + " | closedate:" + closedate + " | symbol:" + record[2] + " | action: " + record[3] + " | lots: " + lots + " | open price: " + openPrice + " | close price: " + closePrice + " | profit: " + profit);
 
                 try {
-                    closedTradesTransaction.setOpenDate(opendate);
-                    closedTradesTransaction.setCloseDate(closedate);
-                    closedTradesTransaction.setSymbol(record[2]);
-                    closedTradesTransaction.setAction(record[3]);
-                    closedTradesTransaction.setLots(lots);
-                    closedTradesTransaction.setOpenPrice(openPrice);
-                    closedTradesTransaction.setClosePrice(closePrice);
-                    closedTradesTransaction.setProfit(profit);
+
+                    closedTradesTransactionTemp.setOpenDate(opendate);
+                    closedTradesTransactionTemp.setCloseDate(closedate);
+                    closedTradesTransactionTemp.setSymbol(record[2]);
+                    closedTradesTransactionTemp.setAction(record[3]);
+                    closedTradesTransactionTemp.setLots(lots);
+                    closedTradesTransactionTemp.setOpenPrice(openPrice);
+                    closedTradesTransactionTemp.setClosePrice(closePrice);
+                    closedTradesTransactionTemp.setProfit(profit);
 //                                             forexTradings(record[3]);
                 } catch (ArrayIndexOutOfBoundsException e) {
                     System.out.println(e);
                 }
-                closedTradesTransactionslist.add(closedTradesTransaction);
-
-        }
+                closedTradesTransactionslist.add(closedTradesTransactionTemp);
+            }
 
         reader.close();
 
-    }
-
-    public List<ClosedTradesTransaction> getClosedTradesTransactionslist() {
         return closedTradesTransactionslist;
+        }
+
     }
-
-
-
-}

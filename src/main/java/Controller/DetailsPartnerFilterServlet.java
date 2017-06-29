@@ -3,7 +3,6 @@ package Controller;
 import Model.ClosedTradesTransaction;
 import Model.Partner;
 import Utility.ObjectPersist;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -35,18 +34,13 @@ public class DetailsPartnerFilterServlet extends HttpServlet{
         partner = new Partner();
         String className=partner.getClass().getSimpleName().toLowerCase();
         int partnerId= Integer.parseInt(request.getParameter("parameterPartnerId"));
-
         String closedTradesFrom=request.getParameter("closedTradesFrom");
         String closedTradesTo=request.getParameter("closedTradesTo");
-
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!: "+closedTradesFrom+" "+closedTradesTo);
         partner=(Partner)objectPersist.findObjectById(partnerId);
         closedTradesTransactionslist=  objectPersist.getClosedTradesTransactionslistFiltered(closedTradesFrom,closedTradesTo);
         request.setAttribute("partnerDetails",partner);
         request.setAttribute("closedTradesTransactionslist", closedTradesTransactionslist);
-        for(ClosedTradesTransaction value: closedTradesTransactionslist){
-            System.out.println(value.getTransactionId()+" "+value.getCloseDate());
-        }
+
         RequestDispatcher dispatcher = request.getRequestDispatcher("/partnerDetails.jsp");
         dispatcher.forward(request, response);
     }

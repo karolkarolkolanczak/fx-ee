@@ -9,7 +9,10 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>Model.User</class>
         <class>Model.Partner</class>
+
         <class>Model.ClosedTradesTransaction</class>
+        <class>Model.ClosedTradesTransactionStrategy1</class>
+        <class>Model.ClosedTradesTransactionStrategy2</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>

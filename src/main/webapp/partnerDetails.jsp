@@ -76,6 +76,7 @@ Welcome Admin: '<b><%=user.getLogin()%></b>'<br><br><br>
         </c:forEach>
     </table></br>
 
+<h6>*source: <a href="https://www.instaforex.com" target="_blank">http://www.myfxbook.com</a></h6>
 
 
     <hr>

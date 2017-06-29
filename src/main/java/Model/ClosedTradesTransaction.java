@@ -6,7 +6,8 @@ import java.util.Date;
 /**
  * Created by a on 25/06/2017.
  */
-@Entity
+//@Entity
+@MappedSuperclass
 public class ClosedTradesTransaction {
     @Id
     @Column(name="transactionId")
@@ -22,6 +23,8 @@ public class ClosedTradesTransaction {
     private double closePrice;
     private double lots;
     private double profit;
+    @Transient
+    private String resource= "";
 
     public ClosedTradesTransaction() {
     }
@@ -96,5 +99,14 @@ public class ClosedTradesTransaction {
 
     public void setProfit(double profit) {
         this.profit = profit;
+    }
+
+
+    public String getResource() {
+        return resource;
+    }
+
+    public void setResource(String resource) {
+        this.resource = resource;
     }
 }

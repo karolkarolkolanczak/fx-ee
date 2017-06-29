@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.ClosedTradesTransaction;
+import Model.ClosedTradesTransactionStrategy1;
 import Model.Partner;
 import Utility.ObjectPersist;
 
@@ -39,7 +40,10 @@ public class DetailsPartnerServlet extends HttpServlet{
         System.out.println("------ Partner ID: "+partnerId);
 
         partner=(Partner)objectPersist.findObjectById(partnerId);
-        closedTradesTransactionslist=objectPersist.getClosedTradesTransactionslist();
+//        !!!!!!!!!!!!!!!!!!!!!
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11@@@@@@@@ PONIZEJ
+        closedTradesTransactionslist=objectPersist.getClosedTradesTransactionslist(new ClosedTradesTransactionStrategy1());
 
         request.setAttribute("partnerDetails",partner);
         request.setAttribute("closedTradesTransactionslist", closedTradesTransactionslist);

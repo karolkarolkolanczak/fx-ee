@@ -16,7 +16,7 @@ public class ObjectPersist {
 
 // @PersistenceContext(unitName = "fxdatabase-persistence-unit")
 // private EntityManager entityManager;
-     EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("fxdatabase-persistence-unit");
+    EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("fxdatabase-persistence-unit");
     EntityManager entityManager = entityManagerFactory.createEntityManager();
 
     public ObjectPersist(){
@@ -69,21 +69,23 @@ public class ObjectPersist {
         entityManager.getTransaction().commit();
     }
 
-    public void addclosedTradesTransactionslist(List<ClosedTradesTransaction> listOfObjects){
+    public void addclosedTradesTransactionslist(List<ClosedTradesTransaction> closedTradesTransactionslist){
 
-        for(int i=0;i< listOfObjects.size();i++){
+        for(int i=0;i< closedTradesTransactionslist.size();i++){
             entityManager.getTransaction().begin();
-            entityManager.persist(listOfObjects.get(i));
+            // must be "entityManager.merge" instead "entityManager.persist " if not will be "detached entity passed to persist"
+            entityManager.persist (closedTradesTransactionslist.get(i));
             entityManager.flush();
             entityManager.clear();
             entityManager.getTransaction().commit();
         }
     }
 
-    public List<ClosedTradesTransaction> getClosedTradesTransactionslist(){
+    public List<ClosedTradesTransaction> getClosedTradesTransactionslist(ClosedTradesTransaction closedTradesTransaction){
         List<ClosedTradesTransaction>closedTradesTransactionslist=new ArrayList<>();
         entityManager.getTransaction().begin();
-        Query query = entityManager.createQuery(" SELECT e FROM ClosedTradesTransaction e", ClosedTradesTransaction.class);
+        String queryString="SELECT e FROM "+closedTradesTransaction.getClass().getSimpleName()+" e";
+        Query query = entityManager.createQuery(queryString, ClosedTradesTransaction.class);
         closedTradesTransactionslist=query.getResultList();
         entityManager.flush();
         entityManager.clear();
