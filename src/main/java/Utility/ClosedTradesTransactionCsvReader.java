@@ -25,10 +25,12 @@ public class ClosedTradesTransactionCsvReader {
     int counter =0;
     ClosedTradesTransaction closedTradesTransaction;
     List<ClosedTradesTransaction> closedTradesTransactionslist;
+    StrategyChooser strategyChooser;
 
     public ClosedTradesTransactionCsvReader() {
         closedTradesTransaction=new ClosedTradesTransaction();
         closedTradesTransactionslist = new ArrayList<>();
+        strategyChooser=new StrategyChooser();
     }
 
     public List<ClosedTradesTransaction> getClosedTradesTransactionslist(ClosedTradesTransaction closedTradesTransaction) throws IOException, ParseException {
@@ -53,14 +55,9 @@ public class ClosedTradesTransactionCsvReader {
             while (iterator.hasNext() && counter < 3) {
 
                 ClosedTradesTransaction closedTradesTransactionTemp=new ClosedTradesTransaction();
-                if(closedTradesTransaction instanceof ClosedTradesTransactionStrategy1){
-                    closedTradesTransactionTemp=new ClosedTradesTransactionStrategy1();
 
-                }
-                if(closedTradesTransaction instanceof ClosedTradesTransactionStrategy2){
-                    closedTradesTransactionTemp=new ClosedTradesTransactionStrategy2();
+                closedTradesTransactionTemp=strategyChooser.getClosedTradesStrategyReferenceByObjectType(closedTradesTransaction);
 
-                }
                 counter++;
                 System.out.println("COUNTER: " + counter);
                 String[] record = iterator.next();

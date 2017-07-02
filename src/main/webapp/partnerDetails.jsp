@@ -24,6 +24,7 @@ Welcome Admin: '<b><%=user.getLogin()%></b>'<br><br><br>
             <th>Login</th>
             <th>Password</th>
             <th>Email</th>
+            <th>Transaction Strategy</th>
             <th>Total Profit / Bonus (for period)</th>
         </tr>
         <tr>
@@ -33,12 +34,14 @@ Welcome Admin: '<b><%=user.getLogin()%></b>'<br><br><br>
             <td><c:out value="${partnerDetails.login}"/></td>
             <td><c:out value="${partnerDetails.password}"/></td>
             <td><c:out value="${partnerDetails.email}"/></td>
+            <td><c:out value="${partnerDetails.closedTradesTransactionStrategyNumber}" /></td>
+            <td></td>
          </tr>
 
     </table></br></br>
 
 <hr>
-    <b>Transactions list (closed trades):</b> </br>
+    <b>Transactions list (closed trades):</b> </br></br>
 
 <form action="DetailsPartnerFilterServlet" method="GET">
     <input type="hidden" name="parameterPartnerId" value="<c:out value="${partnerDetails.partnerId}" />"/>

@@ -36,11 +36,25 @@ Welcome Admin: '<b><%=user.getLogin()%></b>'<br><br><br>
 <%--<form action="currencyFeed.jsp">--%>
 <form action="AddParnterServlet" method="GET">
     Add new Partner: </br></br>
-    First name: <input type="text" name="firstName" value="adam"/></br>
-    Last name: <input type="text" name="lastName" value="kowalski"/></br>
+    First Name: <input type="text" name="firstName" value="adam"/></br>
+    Last Name: <input type="text" name="lastName" value="kowalski"/></br>
     Login: <input type="text" name="login" value="aaa"/></br>
     Password: <input type="text" name="password" value="aaa"/></br>
-    Email: <input type="text" name="email" value="123@wp.pl"/></br></br>
+    Email: <input type="text" name="email" value="123@wp.pl"/></br>
+    Transaction Strategy:
+    <select name="transactionStrategy" onchange="">
+        <option value="1">Strategy 1</option>
+        <option value="2">Strategy 2</option>
+        <option value="3">Strategy 3</option>
+        <option value="4">Strategy 4</option>
+        <option value="5">Strategy 5</option>
+        <option value="6">Strategy 6</option>
+        <option value="7">Strategy 7</option>
+        <option value="8">Strategy 8</option>
+        <option value="9">Strategy 9</option>
+        <option value="10">Strategy 10</option>
+    </select>
+    </br></br>
     <%--Joined: <input type="date" name="joinedDate"/></br>--%>
 
     <input type="submit" value="Add"/>
@@ -93,6 +107,7 @@ Welcome Admin: '<b><%=user.getLogin()%></b>'<br><br><br>
             <th>Login</th>
             <th>Password</th>
             <th>Email</th>
+            <th>Transaction Strategy</th>
             <th></th>
             <th></th>
             <th></th>
@@ -106,6 +121,7 @@ Welcome Admin: '<b><%=user.getLogin()%></b>'<br><br><br>
             <td><c:out value="${value.login}" /></td>
             <td><c:out value="${value.password}" /></td>
             <td><c:out value="${value.email}" /></td>
+            <td><c:out value="${value.closedTradesTransactionStrategyNumber}" /></td>
             <td><a href="EditParnterServlet?parameterPartnerId=<c:out value='${value.partnerId}'/>"> edit </a></td>
             <td><a href="DetailsPartnerServlet?parameterPartnerId=<c:out value='${value.partnerId}'/>"> view details </a></td>
             <td><a href="DeletePartnerServlet?parameterPartnerId=<c:out value='${value.partnerId}'/>"> delete </a></td>

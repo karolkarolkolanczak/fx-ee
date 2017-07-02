@@ -17,19 +17,10 @@ public class Partner {
     private String password;
     private String email;
     private Date joinedDate;
+    private int closedTradesTransactionStrategyNumber;
 
     public Partner() {
     }
-
-//    public Partner(int partnerId, String firstName, String lastName, String login, String password, String email) {
-//        this.partnerId = partnerId;
-//        this.firstName = firstName;
-//        this.lastName = lastName;
-//        this.login = login;
-//        this.password = password;
-//        this.email = email;
-////        this.joinedDate = joinedDate;
-//    }
 
     public int getPartnerId() {
         return partnerId;
@@ -79,7 +70,15 @@ public class Partner {
         this.email = email;
     }
 
-//    public Date getJoinedDate() {
+    public int getClosedTradesTransactionStrategyNumber() {
+        return closedTradesTransactionStrategyNumber;
+    }
+
+    public void setClosedTradesTransactionStrategyNumber(int closedTradesTransactionStrategyNumber) {
+        this.closedTradesTransactionStrategyNumber = closedTradesTransactionStrategyNumber;
+    }
+
+    //    public Date getJoinedDate() {
 //        return joinedDate;
 //    }
 //

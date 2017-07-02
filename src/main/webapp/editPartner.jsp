@@ -23,6 +23,7 @@ Welcome Admin: '<b><%=user.getLogin()%></b>'<br><br><br>
         <th>Login</th>
         <th>Password</th>
         <th>Email</th>
+        <th>Transaction Strategy</th>
 
     </tr>
     <tr>
@@ -32,6 +33,7 @@ Welcome Admin: '<b><%=user.getLogin()%></b>'<br><br><br>
         <td><c:out value="${partnerDetails.login}"/></td>
         <td><c:out value="${partnerDetails.password}"/></td>
         <td><c:out value="${partnerDetails.email}"/></td>
+        <td><c:out value="${partnerDetails.closedTradesTransactionStrategyNumber}" /></td>
     </tr>
 
 </table></br></br>
@@ -44,7 +46,8 @@ Welcome Admin: '<b><%=user.getLogin()%></b>'<br><br><br>
     Login: <input type="text" name="login" value="<c:out value="${partnerDetails.login}"/>"/></br>
     Password: <input type="text" name="password" value="<c:out value="${partnerDetails.password}"/>"/></br>
     Email: <input type="text" name="email" value="<c:out value="${partnerDetails.email}"/>"/></br>
-    </br>
+    <input type="hidden" name="strategy" value="<c:out value="${partnerDetails.closedTradesTransactionStrategyNumber}"/>"/></br>
+
     <%--Joined: <input type="date" name="joinedDate"/></br>--%>
 
     <input type="submit" value="Save"/>

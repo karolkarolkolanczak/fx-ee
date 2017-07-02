@@ -93,12 +93,12 @@ public class ObjectPersist {
         return closedTradesTransactionslist;
     }
 
-    public List<ClosedTradesTransaction> getClosedTradesTransactionslistFiltered(String closedTradesFrom, String closedTradesTo){
+    public List<ClosedTradesTransaction> getClosedTradesTransactionslistFiltered(ClosedTradesTransaction closedTradesTransaction,String closedTradesFrom, String closedTradesTo){
         List<ClosedTradesTransaction>closedTradesTransactionslist=new ArrayList<>();
         entityManager.getTransaction().begin();
-        String queryString="SELECT * FROM ClosedTradesTransaction WHERE closeDate between '"+closedTradesFrom+"' and '"+closedTradesTo+"'";
+        String queryString="SELECT * FROM "+closedTradesTransaction.getClass().getSimpleName()+" WHERE closeDate between '"+closedTradesFrom+"' and '"+closedTradesTo+"'";
 //        "SELECT * FROM ClosedTradesTransaction WHERE closeDate between '2017-01-01' and '2017-02-01'"
-        Query query = entityManager.createNativeQuery(queryString, ClosedTradesTransaction.class);
+        Query query = entityManager.createNativeQuery(queryString, closedTradesTransaction.getClass());
         closedTradesTransactionslist=query.getResultList();
         entityManager.flush();
         entityManager.clear();

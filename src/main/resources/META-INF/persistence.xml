@@ -13,6 +13,14 @@
         <class>Model.ClosedTradesTransaction</class>
         <class>Model.ClosedTradesTransactionStrategy1</class>
         <class>Model.ClosedTradesTransactionStrategy2</class>
+        <class>Model.ClosedTradesTransactionStrategy3</class>
+        <class>Model.ClosedTradesTransactionStrategy4</class>
+        <class>Model.ClosedTradesTransactionStrategy5</class>
+        <class>Model.ClosedTradesTransactionStrategy6</class>
+        <class>Model.ClosedTradesTransactionStrategy7</class>
+        <class>Model.ClosedTradesTransactionStrategy8</class>
+        <class>Model.ClosedTradesTransactionStrategy9</class>
+        <class>Model.ClosedTradesTransactionStrategy10</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>

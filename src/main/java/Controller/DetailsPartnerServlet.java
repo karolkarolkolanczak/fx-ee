@@ -4,6 +4,7 @@ import Model.ClosedTradesTransaction;
 import Model.ClosedTradesTransactionStrategy1;
 import Model.Partner;
 import Utility.ObjectPersist;
+import Utility.StrategyChooser;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -24,10 +25,12 @@ public class DetailsPartnerServlet extends HttpServlet{
     ObjectPersist objectPersist;
     Partner partner;
     List<ClosedTradesTransaction> closedTradesTransactionslist;
+    StrategyChooser strategyChooser;
 
     public DetailsPartnerServlet() {
         objectPersist=new ObjectPersist();
         closedTradesTransactionslist=new ArrayList<>();
+        strategyChooser=new StrategyChooser();
     }
 
     @Override
@@ -36,14 +39,8 @@ public class DetailsPartnerServlet extends HttpServlet{
         partner = new Partner();
         String className=partner.getClass().getSimpleName().toLowerCase();
         int partnerId= Integer.parseInt(request.getParameter("parameterPartnerId"));
-
-        System.out.println("------ Partner ID: "+partnerId);
-
         partner=(Partner)objectPersist.findObjectById(partnerId);
-//        !!!!!!!!!!!!!!!!!!!!!
-
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11@@@@@@@@ PONIZEJ
-        closedTradesTransactionslist=objectPersist.getClosedTradesTransactionslist(new ClosedTradesTransactionStrategy1());
+        closedTradesTransactionslist=objectPersist.getClosedTradesTransactionslist(strategyChooser.getClosedTradesStrategyNewObjectByChosenStrategyNumber(partner.getClosedTradesTransactionStrategyNumber()));
 
         request.setAttribute("partnerDetails",partner);
         request.setAttribute("closedTradesTransactionslist", closedTradesTransactionslist);

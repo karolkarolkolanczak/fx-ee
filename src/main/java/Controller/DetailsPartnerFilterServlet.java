@@ -3,6 +3,8 @@ package Controller;
 import Model.ClosedTradesTransaction;
 import Model.Partner;
 import Utility.ObjectPersist;
+import Utility.StrategyChooser;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,10 +25,12 @@ public class DetailsPartnerFilterServlet extends HttpServlet{
     ObjectPersist objectPersist;
     Partner partner;
     List<ClosedTradesTransaction> closedTradesTransactionslist;
+    StrategyChooser strategyChooser;
 
     public DetailsPartnerFilterServlet() {
         objectPersist=new ObjectPersist();
         closedTradesTransactionslist=new ArrayList<>();
+        strategyChooser=new StrategyChooser();
     }
 
     @Override
@@ -37,7 +41,7 @@ public class DetailsPartnerFilterServlet extends HttpServlet{
         String closedTradesFrom=request.getParameter("closedTradesFrom");
         String closedTradesTo=request.getParameter("closedTradesTo");
         partner=(Partner)objectPersist.findObjectById(partnerId);
-        closedTradesTransactionslist=  objectPersist.getClosedTradesTransactionslistFiltered(closedTradesFrom,closedTradesTo);
+        closedTradesTransactionslist=  objectPersist.getClosedTradesTransactionslistFiltered(strategyChooser.getClosedTradesStrategyNewObjectByChosenStrategyNumber(partner.getClosedTradesTransactionStrategyNumber()),closedTradesFrom,closedTradesTo);
         request.setAttribute("partnerDetails",partner);
         request.setAttribute("closedTradesTransactionslist", closedTradesTransactionslist);
 

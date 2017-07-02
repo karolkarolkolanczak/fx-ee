@@ -42,6 +42,7 @@ public class AddParnterServlet extends HttpServlet {
         partner.setLogin(request.getParameter("login"));
         partner.setPassword(request.getParameter("password"));
         partner.setEmail(request.getParameter("email"));
+        partner.setClosedTradesTransactionStrategyNumber(Integer.parseInt(request.getParameter("transactionStrategy")));
 //        partner.setJoinedDate((Date) request.getParameter("joinedDate")));
 
 objectPersist.addObject(partner);
