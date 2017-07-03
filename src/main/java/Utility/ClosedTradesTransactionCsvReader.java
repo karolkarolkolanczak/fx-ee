@@ -52,7 +52,7 @@ public class ClosedTradesTransactionCsvReader {
         //skip header row
         iterator.next();
 
-            while (iterator.hasNext() && counter < 3) {
+            while (iterator.hasNext() && counter < 100) {
 
                 ClosedTradesTransaction closedTradesTransactionTemp=new ClosedTradesTransaction();
 

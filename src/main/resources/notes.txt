@@ -22,6 +22,10 @@ CREATE TABLE `partner` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --------------------------------------------
+
+1. po uruchomieniu pierwszy raz projektu nalezy recznie w bazie danych wpisac w SQl
+"INSERT INTO user (`firstName`, `lastName`, `login`,`password`,`email`) VALUES ('john', 'adamecki', 'admin', 'admin','123@wp.pl');"
+
 INSERT INTO `fxdatabase`.`partner` (`firstName`,`lastName`,`login`,`password`,`email`,`joinedDate`) VALUES ('john', 'derek', 'aaa', '123','123@wp.pl','2017-01-30');
 INSERT INTO `fxdatabase`.`partner` (`firstName`,`lastName`,`login`,`password`,`email`,`joinedDate`) VALUES ('ala', 'alunia', 'bbb', '234','aaa@wp.pl','2017-01-15');
 

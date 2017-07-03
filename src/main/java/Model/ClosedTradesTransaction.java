@@ -1,6 +1,7 @@
 package Model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
 import java.util.Date;
 
 /**

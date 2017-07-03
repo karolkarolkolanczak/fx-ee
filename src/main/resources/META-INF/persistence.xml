@@ -38,8 +38,8 @@
             <!--(Part 2) After initialization tag it-->
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
-            <!--<property name="hibernate.hbm2ddl.auto" value="create-drop"/>-->
             <property name="hibernate.format_sql" value="true"/>
+            <!--&lt;!&ndash;<property name="hibernate.hbm2ddl.auto" value="create-drop"/>&ndash;&gt;-->
 
         </properties>
     </persistence-unit>

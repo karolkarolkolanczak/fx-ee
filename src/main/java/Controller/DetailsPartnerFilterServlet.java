@@ -26,11 +26,13 @@ public class DetailsPartnerFilterServlet extends HttpServlet{
     Partner partner;
     List<ClosedTradesTransaction> closedTradesTransactionslist;
     StrategyChooser strategyChooser;
+    float totalLotsTurnoverForPeriod;
 
     public DetailsPartnerFilterServlet() {
         objectPersist=new ObjectPersist();
         closedTradesTransactionslist=new ArrayList<>();
         strategyChooser=new StrategyChooser();
+
     }
 
     @Override
@@ -42,10 +44,24 @@ public class DetailsPartnerFilterServlet extends HttpServlet{
         String closedTradesTo=request.getParameter("closedTradesTo");
         partner=(Partner)objectPersist.findObjectById(partnerId);
         closedTradesTransactionslist=  objectPersist.getClosedTradesTransactionslistFiltered(strategyChooser.getClosedTradesStrategyNewObjectByChosenStrategyNumber(partner.getClosedTradesTransactionStrategyNumber()),closedTradesFrom,closedTradesTo);
+        totalLotsTurnoverForPeriod=0;
+        float totalLotsTurnoverForPeriod=sum();
+        float totalBonusForPeriod=16 *totalLotsTurnoverForPeriod;
+
+        request.setAttribute("closedTradesFrom",closedTradesFrom);
+        request.setAttribute("closedTradesTo",closedTradesTo);
         request.setAttribute("partnerDetails",partner);
         request.setAttribute("closedTradesTransactionslist", closedTradesTransactionslist);
+        request.setAttribute("totalLotsTurnoverForPeriod",totalLotsTurnoverForPeriod);
+        request.setAttribute("totalBonusForPeriod",totalBonusForPeriod);
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/partnerDetails.jsp");
         dispatcher.forward(request, response);
+    }
+    float sum(){
+        for(int i=0;i<closedTradesTransactionslist.size();i++){
+            totalLotsTurnoverForPeriod= (float) (totalLotsTurnoverForPeriod+closedTradesTransactionslist.get(i).getLots());
+        }
+        return totalLotsTurnoverForPeriod;
     }
 }

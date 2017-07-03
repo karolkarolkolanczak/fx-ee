@@ -18,6 +18,9 @@ public class Partner {
     private String email;
     private Date joinedDate;
     private int closedTradesTransactionStrategyNumber;
+    @Transient
+    //@Digits(integer=9, fraction=2)
+    private float totalBonusForPeriod;
 
     public Partner() {
     }
@@ -78,7 +81,15 @@ public class Partner {
         this.closedTradesTransactionStrategyNumber = closedTradesTransactionStrategyNumber;
     }
 
-    //    public Date getJoinedDate() {
+    public float getTotalBonusForPeriod() {
+        return totalBonusForPeriod;
+    }
+
+    public void setTotalBonusForPeriod(float totalBonusForPeriod) {
+        this.totalBonusForPeriod = totalBonusForPeriod;
+    }
+
+//    public Date getJoinedDate() {
 //        return joinedDate;
 //    }
 //

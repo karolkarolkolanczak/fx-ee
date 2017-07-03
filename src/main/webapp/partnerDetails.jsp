@@ -8,49 +8,98 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="Model.Partner" %>
 <html>
+<head>
+    <!--  bootstrap -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/bootstrap-grid.min.css" rel="stylesheet">
+    <link href="css/bootstrap-reboot.min.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <!-- head koniec  bootstrap -->
+</head>
 <body>
-
-<h2>ADMINISTRATOR PANEL</h2><hr>
 <%User user=(User)session.getAttribute("userSessionData");%>
-Welcome Admin: '<b><%=user.getLogin()%></b>'<br><br><br>
+<div class="container">
 
-    <b>Partner details:</b></br></br>
+    <nav class="navbar navbar-default ">
+        <div style="position:absolute; top:5px; right:10px" >
+            Welcome Admin: '<b><%=user.getLogin()%></b>'</br>
+        </div>
+        <div style="position:absolute; top:30px; right:10px" >
+            <form action="LogOutServlet" method="get">
+                <button type="submit" class="btn btn-default">log out</button>
+                <%--<input type="submit" value="log out">--%>
+            </form>
+        </div>
+        <div style="margin: 20px">
+            <h2>ADMINISTRATOR PANEL</h2>
+        </div>
+    </nav>
+    <div class="row"></div>
 
-    <table border="1">
-        <tr>
-            <th>Partner Id</th>
-            <th>First name</th>
-            <th>Last name</th>
-            <th>Login</th>
-            <th>Password</th>
-            <th>Email</th>
-            <th>Transaction Strategy</th>
-            <th>Total Profit / Bonus (for period)</th>
-        </tr>
-        <tr>
-            <td><c:out value="${partnerDetails.partnerId}"/></td>
-            <td><c:out value="${partnerDetails.firstName}"/></td>
-            <td><c:out value="${partnerDetails.lastName}"/></td>
-            <td><c:out value="${partnerDetails.login}"/></td>
-            <td><c:out value="${partnerDetails.password}"/></td>
-            <td><c:out value="${partnerDetails.email}"/></td>
-            <td><c:out value="${partnerDetails.closedTradesTransactionStrategyNumber}" /></td>
-            <td></td>
-         </tr>
+    <h4><b>Partner details:</b></h4> </br>
 
-    </table></br></br>
+    <div class ="col-lg-offset-0 col-lg-11 ">
+        <table class="table table-striped">
+            <tr>
+                <th>Partner Id</th>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Login</th>
+                <th>Password</th>
+                <th>Email</th>
+                <th>Strategy</th>
+                <th>Total Profit / Bonus (for period in USD)</th>
+            </tr>
+            <tr>
+                <td><c:out value="${partnerDetails.partnerId}"/></td>
+                <td><c:out value="${partnerDetails.firstName}"/></td>
+                <td><c:out value="${partnerDetails.lastName}"/></td>
+                <td><c:out value="${partnerDetails.login}"/></td>
+                <td><c:out value="${partnerDetails.password}"/></td>
+                <td><c:out value="${partnerDetails.email}"/></td>
+                <td><c:out value="${partnerDetails.closedTradesTransactionStrategyNumber}" /></td>
+                <td><b><span class="redColor">USD <c:out value="${totalBonusForPeriod}"/></span></b></td>
+             </tr>
 
+        </table>
+    </div>
+    <div class="row"></div>
 <hr>
-    <b>Transactions list (closed trades):</b> </br></br>
+    <h4><b>Transactions list (closed trades):</b></h4>
 
-<form action="DetailsPartnerFilterServlet" method="GET">
-    <input type="hidden" name="parameterPartnerId" value="<c:out value="${partnerDetails.partnerId}" />"/>
-    Trades from: <input type="date" name="closedTradesFrom" value="2017-01-01"/></br>
-    Trades To: <input type="date" name="closedTradesTo" value="2017-02-01"/></br>
-    <input type="submit" value="Search"/>
-</form></br>
+    <div class ="col-lg-offset-0 col-lg-5">
+        <form class="form-horizontal" action="DetailsPartnerFilterServlet" method="get">
+            <div class="form-group">
+                <div>
+                    <input type="hidden" class="form-control" id="parameterPartnerId" name="parameterPartnerId" value="<c:out value="${partnerDetails.partnerId}"/>" >
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="closedTradesFrom" class="col-sm-offset-0 col-sm-5 control-label">Trades from (Close Date)</label>
+                <div class="col-sm-5">
+                    <input type="date" class="form-control" id="closedTradesFrom" name="closedTradesFrom" value="<c:out value="${closedTradesFrom}"/>" >
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="closedTradesTo" class="col-sm-offset-0 col-sm-5 control-label">Trades To (Close Date)</label>
+                <div class="col-sm-5">
+                    <input type="date" class="form-control" id="closedTradesTo" name="closedTradesTo" value="<c:out value="${closedTradesTo}"/>" >
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-5 col-sm-10">
+                    <button type="submit" class="btn btn-default">Search</button>
+                </div>
+            </div>
+        </form>
+    </div> </br></br>
 
-    <table border="1">
+    <div class="row"></div>
+
+    <div class ="col-lg-offset-0 col-lg-11 ">
+        <table class="table table-striped">
             <tr>
                 <th>Transaction Id</th>
                 <th>Symbol</th>
@@ -77,19 +126,23 @@ Welcome Admin: '<b><%=user.getLogin()%></b>'<br><br><br>
               <%--<td><a href="DeletePartnerServlet?parameterPartnerId=<c:out value='${value.partnerId}'/>"> delete </a></td>--%>
             </tr>
         </c:forEach>
-    </table></br>
+        </table>
+    </div>
+    <div class="row"></div>
+<h6>*source: <a href="https://www.instaforex.com" target="_blank">http://www.myfxbook.com</a></h6></br>
 
-<h6>*source: <a href="https://www.instaforex.com" target="_blank">http://www.myfxbook.com</a></h6>
+<h5>Total Bonus (USD <b>16</b> per Lot * <c:out value="${totalLotsTurnoverForPeriod}"/>) =  <b><span class="redColor">USD <c:out value="${totalBonusForPeriod}" /> </span></b></h5></br>
+W przypadku pary walutowej EURUSD stawka bonusowa dla Partnera wynosi 16 USD za 1 Lota. Zatem za dany okres Partner otrzyma: USD 16 * <c:out value="${totalLotsTurnoverForPeriod}" /> Lota = <b><span class="redColor">USD <c:out value="${totalBonusForPeriod}"/></span></b>.
 
-
+    <div class="row"></div>
     <hr>
-    <form action="LogOutServlet" method="get">
-        <input type="submit" value="log out">
-    </form>
-
     <form action="GoToAdminServlet" method="get">
-        <input type="submit" value="back to main">
+        <button type="submit" class="btn btn-default">back to main</button>
     </form>
-
+</div>
+<!-- body bootstrap + jquery-->
+<script src="js/jquery-3.2.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<!-- koniec body bootstrap + jquery-->
 </body>
 </html>
