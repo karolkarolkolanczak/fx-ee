@@ -49,7 +49,7 @@
             <div class="form-group">
                 <label for="firstName" class="col-sm-3 control-label">First Name</label>
                 <div class="col-sm-5">
-                    <input type="text" class="form-control" id="firstName" name="firstName" value="<c:out value="${partnerDetails.partnerId}" />">
+                    <input type="text" class="form-control" id="firstName" name="firstName" value="<c:out value="${partnerDetails.firstName}" />">
                 </div>
             </div>
             <div class="form-group">
