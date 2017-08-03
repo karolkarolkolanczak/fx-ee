@@ -20,7 +20,6 @@ import java.util.List;
 @WebServlet("/EditParnterServlet")
 public class EditParnterServlet extends HttpServlet{
 
-
     ObjectPersist objectPersist;
     Partner partner;
 

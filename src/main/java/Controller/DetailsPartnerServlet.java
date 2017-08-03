@@ -59,7 +59,6 @@ public class DetailsPartnerServlet extends HttpServlet{
         request.setAttribute("totalLotsTurnoverForPeriod",totalLotsTurnoverForPeriod);
         request.setAttribute("totalBonusForPeriod",totalBonusForPeriod);
 
-
         RequestDispatcher dispatcher = request.getRequestDispatcher("/partnerDetails.jsp");
         dispatcher.forward(request, response);
     }

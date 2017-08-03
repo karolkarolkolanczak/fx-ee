@@ -21,9 +21,7 @@ public class ObjectPersist {
 
     public ObjectPersist(){
     }
-
 //        String sql = "INSERT INTO `fxdatabase`.`partner` (`idPartner`,`firstName`,`lastName`,`login`,`password`,`email`) VALUES (null,?,?,?,?,?)";
-
     public  List<User> getListOfAllUsers(){
 
         List<User> listOfAllUsers=new ArrayList<>();
@@ -33,9 +31,6 @@ public class ObjectPersist {
         entityManager.flush();
         entityManager.clear();
         entityManager.getTransaction().commit();
-//        for(User value: listOfAllUsers){
-//            System.out.println("--- USERS --"+value.getLogin()+" "+value.getEmail());
-//        }
         return listOfAllUsers;
     }
 
@@ -49,20 +44,12 @@ public class ObjectPersist {
         entityManager.flush();
         entityManager.clear();
         entityManager.getTransaction().commit();
-//        for(Partner value: listOfAllPartners){
-//            System.out.println("--- Partners --"+value.getLogin()+" "+value.getEmail());
-//        }
         return listOfAllPartners;
     }
 
      public void addObject(Object object){
 
         entityManager.getTransaction().begin();
-//        partner.setFirstName("z");
-//        partner.setLastName("z");
-//        partner.setEmail("z");
-//        partner.setLogin("z");
-//        partner.setPassword("z");
         entityManager.persist(object);
         entityManager.flush();
         entityManager.clear();
@@ -107,10 +94,8 @@ public class ObjectPersist {
     }
 
     public void deleteObject(String className, int id){
-
         String queryString="DELETE FROM "+className+" WHERE partnerId ="+id;
         Query query=entityManager.createNativeQuery(queryString);
-
         entityManager.getTransaction().begin();
         query.executeUpdate();
         entityManager.flush();
@@ -119,9 +104,7 @@ public class ObjectPersist {
     }
 
     public void updateObject(Object object){
-
         Partner partner=(Partner) object;
-
         entityManager.getTransaction().begin();
         entityManager.merge(partner);
         entityManager.flush();
@@ -130,10 +113,8 @@ public class ObjectPersist {
     }
 
     public Object findObjectById(int parnterId){
-
         entityManager.getTransaction().begin();
         Partner partner =new Partner();
-
         partner = entityManager.find(Partner.class, parnterId);
 //      Query query=entityManager.createQuery("SELECT e FROM Partner e WHERE e.partnerId=4", Partner.class);
 //      partner= (Partner) query.getSingleResult();
@@ -142,5 +123,4 @@ public class ObjectPersist {
         entityManager.getTransaction().commit();
         return partner;
     }
-
 }

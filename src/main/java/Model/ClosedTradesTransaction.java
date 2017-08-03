@@ -102,7 +102,6 @@ public class ClosedTradesTransaction {
         this.profit = profit;
     }
 
-
     public String getResource() {
         return resource;
     }

@@ -24,7 +24,6 @@ public class AddParnterServlet extends HttpServlet {
     HttpSession session;
     ObjectPersist objectPersist;
     public AddParnterServlet() {
-
         sessionClass = new Session();
         listOfAllPartners = new ArrayList<>();
         objectPersist =new ObjectPersist();
@@ -34,9 +33,7 @@ public class AddParnterServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         partner = new Partner();
-
         session = sessionClass.getSession(request);
-
         partner.setFirstName(request.getParameter("firstName"));
         partner.setLastName(request.getParameter("lastName"));
         partner.setLogin(request.getParameter("login"));
@@ -44,26 +41,10 @@ public class AddParnterServlet extends HttpServlet {
         partner.setEmail(request.getParameter("email"));
         partner.setClosedTradesTransactionStrategyNumber(Integer.parseInt(request.getParameter("transactionStrategy")));
 //        partner.setJoinedDate((Date) request.getParameter("joinedDate")));
-
-objectPersist.addObject(partner);
-
-//        listOfPartners = partnerDataUtil.addToListOfPartners(listOfPartners, partner);
-
-//        partnerDataUtil.addToListOfPartners(partner);
-
-
-//        session.setAttribute("listOfPartners", listOfPartners);
-
-//      System.out.println("FROM SESSION - LOGIN "+((User)session.getAttribute("userSessionData")).getLogin());
-        System.out.println("-------ADDING END-----------");
-
+        objectPersist.addObject(partner);
         listOfAllPartners= objectPersist.getListOfAllPartners();
-
         request.setAttribute("listOfAllPartners", listOfAllPartners);
-
         RequestDispatcher dispatcher = request.getRequestDispatcher("/admin.jsp");
         dispatcher.forward(request, response);
     }
-
-
 }

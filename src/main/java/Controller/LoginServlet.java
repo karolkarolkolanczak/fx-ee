@@ -98,27 +98,26 @@ public class LoginServlet extends HttpServlet{
         listOfClosedTradesStrategies=strategyChooser.getListOfClosedTradesStrategies();
 
 
-    for(int i=0;i<listOfClosedTradesStrategies.size();i++){
-        if (objectPersist.getClosedTradesTransactionslist(listOfClosedTradesStrategies.get(i)).size()==0){
-            try {
-                ClosedTradesTransactionCsvReader closedTradesTransactionCsvReader=new ClosedTradesTransactionCsvReader();
-                closedTradesTransactionslist=closedTradesTransactionCsvReader.getClosedTradesTransactionslist(listOfClosedTradesStrategies.get(i));
+        for(int i=0;i<listOfClosedTradesStrategies.size();i++){
+            if (objectPersist.getClosedTradesTransactionslist(listOfClosedTradesStrategies.get(i)).size()==0){
+                try {
+                    ClosedTradesTransactionCsvReader closedTradesTransactionCsvReader=new ClosedTradesTransactionCsvReader();
+                    closedTradesTransactionslist=closedTradesTransactionCsvReader.getClosedTradesTransactionslist(listOfClosedTradesStrategies.get(i));
 
-                objectPersist.addclosedTradesTransactionslist(closedTradesTransactionslist);
+                    objectPersist.addclosedTradesTransactionslist(closedTradesTransactionslist);
 
-                for(ClosedTradesTransaction value: closedTradesTransactionslist){
-                    System.out.println(value.getTransactionId()+" "+value.getSymbol()+" "+value.getProfit());
+                    for(ClosedTradesTransaction value: closedTradesTransactionslist){
+                        System.out.println(value.getTransactionId()+" "+value.getSymbol()+" "+value.getProfit());
+                    }
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-
-            } catch (ParseException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
             }
+            else return;
         }
-        else return;
-}
-
     }
 }
 

@@ -85,7 +85,7 @@ public class User {
 //    public Date getJoinedDate() {
 //        return joinedDate;
 //    }
-//
+
 //    public void setJoinedDate(Date joinedDate) {
 //        this.joinedDate = joinedDate;
 //    }

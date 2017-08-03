@@ -35,29 +35,17 @@ public class ClosedTradesTransactionCsvReader {
 
     public List<ClosedTradesTransaction> getClosedTradesTransactionslist(ClosedTradesTransaction closedTradesTransaction) throws IOException, ParseException {
 
-
         //        "/Transactions/closedTradesStrategy4.csv"
         URL u = this.getClass().getResource(closedTradesTransaction.getResource());
-
         String urlToString = u.toString().substring(5); // to by obciac tekst "vfs..."
-
-        //  CSVReader reader = new CSVReader(new FileReader("C:\\java\\EEFive\\src\\main\\resources\\eurusd.csv"), ',');
-        //CSVReader reader = new CSVReader(new FileReader("C:\\java3\\1part-java\\src\\main\\java\\com\\projectForex\\data\\eurusd.csv"), ',');
         CSVReader reader = new CSVReader(new FileReader(urlToString), ',');
-
-        //read all lines at once
         List<String[]> records = reader.readAll();
-
         Iterator<String[]> iterator = records.iterator();
-        //skip header row
         iterator.next();
 
             while (iterator.hasNext() && counter < 100) {
-
                 ClosedTradesTransaction closedTradesTransactionTemp=new ClosedTradesTransaction();
-
                 closedTradesTransactionTemp=strategyChooser.getClosedTradesStrategyReferenceByObjectType(closedTradesTransaction);
-
                 counter++;
                 System.out.println("COUNTER: " + counter);
                 String[] record = iterator.next();
@@ -76,7 +64,6 @@ public class ClosedTradesTransactionCsvReader {
                 System.out.println("opendate: " + opendate + " " + opendate.getClass() + " | closedate:" + closedate + " | symbol:" + record[2] + " | action: " + record[3] + " | lots: " + lots + " | open price: " + openPrice + " | close price: " + closePrice + " | profit: " + profit);
 
                 try {
-
                     closedTradesTransactionTemp.setOpenDate(opendate);
                     closedTradesTransactionTemp.setCloseDate(closedate);
                     closedTradesTransactionTemp.setSymbol(record[2]);
@@ -85,16 +72,12 @@ public class ClosedTradesTransactionCsvReader {
                     closedTradesTransactionTemp.setOpenPrice(openPrice);
                     closedTradesTransactionTemp.setClosePrice(closePrice);
                     closedTradesTransactionTemp.setProfit(profit);
-//                                             forexTradings(record[3]);
                 } catch (ArrayIndexOutOfBoundsException e) {
                     System.out.println(e);
                 }
                 closedTradesTransactionslist.add(closedTradesTransactionTemp);
             }
-
         reader.close();
-
         return closedTradesTransactionslist;
         }
-
     }

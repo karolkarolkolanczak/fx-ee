@@ -25,7 +25,6 @@ public class SavePartnerServlet extends HttpServlet {
     HttpSession session;
     ObjectPersist objectPersist;
     public SavePartnerServlet() {
-
         sessionClass = new Session();
         listOfAllPartners = new ArrayList<>();
         objectPersist =new ObjectPersist();
@@ -33,9 +32,7 @@ public class SavePartnerServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         partner = new Partner();
-
         session = sessionClass.getSession(request);
         partner.setPartnerId(Integer.parseInt(request.getParameter("partnerId")));
         partner.setFirstName(request.getParameter("firstName"));
@@ -45,11 +42,8 @@ public class SavePartnerServlet extends HttpServlet {
         partner.setEmail(request.getParameter("email"));
         partner.setClosedTradesTransactionStrategyNumber(Integer.parseInt(request.getParameter("strategy")));
 //        partner.setJoinedDate((Date) request.getParameter("joinedDate")));
-
         objectPersist.updateObject(partner);
-
         request.setAttribute("partnerDetails",objectPersist.findObjectById(partner.getPartnerId()));
-
         RequestDispatcher dispatcher = request.getRequestDispatcher("/editPartner.jsp");
         dispatcher.forward(request, response);
     }

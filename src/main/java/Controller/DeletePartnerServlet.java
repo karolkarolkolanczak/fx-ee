@@ -34,13 +34,9 @@ public class DeletePartnerServlet extends HttpServlet{
         partner = new Partner();
         String className=partner.getClass().getSimpleName().toLowerCase();
         int partnerId= Integer.parseInt(request.getParameter("parameterPartnerId"));
-
         objectPersist.deleteObject( className, partnerId);
-
         listOfAllPartners= objectPersist.getListOfAllPartners();
-
         request.setAttribute("listOfAllPartners", listOfAllPartners);
-
         RequestDispatcher dispatcher = request.getRequestDispatcher("/admin.jsp");
         dispatcher.forward(request, response);
     }

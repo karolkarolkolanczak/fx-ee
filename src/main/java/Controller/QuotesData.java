@@ -27,22 +27,15 @@ public class QuotesData extends HttpServlet {
     public QuotesData() {
         listOfQuotes=new ArrayList<>();
         fxQuotesParser=new FxQuotesParser();
-        System.out.println("   ------   COUNTERrrrrrrrrr: '"+counter+"'");
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         counter++;
-        System.out.println("   ?????   COUNTER: '"+counter+"'");
-
         try {
             listOfQuotes=fxQuotesParser.getListOfQuotes();
             request.setAttribute("listOfQuotes",listOfQuotes);
-//            RequestDispatcher dispatcher=request.getRequestDispatcher("/currencyFeed.jsp");
-//            dispatcher.forward(request,response);
-//            RequestDispatcher dispatcher = request.getRequestDispatcher("/currencyFeed.jsp");
-//            dispatcher.include(request, response);
-        } catch (Exception e) {
+            } catch (Exception e) {
             e.printStackTrace();
         }
     }
